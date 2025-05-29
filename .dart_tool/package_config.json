@@ -74,6 +74,12 @@
       "languageVersion": "3.7"
     },
     {
+      "name": "get",
+      "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/get-4.7.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "go_router",
       "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/go_router-15.1.2",
       "packageUri": "lib/",
@@ -200,13 +206,19 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "web",
+      "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/web-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "flutter_application_socail_media",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.7"
     }
   ],
-  "generated": "2025-05-27T09:18:36.710560Z",
+  "generated": "2025-05-29T13:55:11.468562Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///C:/Users/Windows11/Desktop/Flutter/flutter",

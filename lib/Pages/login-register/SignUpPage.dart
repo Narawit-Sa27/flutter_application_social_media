@@ -1,8 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:flutter_application_socail_media/Widget-component/TextFieldInput.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
+
+  @override
+  SignUpPageState createState() => SignUpPageState();
+}
+
+class SignUpPageState extends State<SignUpPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  final fullNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
+  void _signUP() async {
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Processing Data')));
+    }
+    // try {
+    //   final user = await _userService.login(
+    //     _emailController.text,
+    //     _passwordController.text,
+    //   );
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => HomePage(user: user)),
+    //   );
+    // } catch (e) {
+    //   print(e);
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,191 +74,100 @@ class SignUpPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 30),
 
-                          // ==== 📥 input Full Name, Email, Password & Confirm Password ====
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Full Name',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xFF757575),
+                          // ==== 📥 Form input Full Name, Email, Password & Confirm Password ====
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                CustomTextField(
+                                  label: 'Full Name',
+                                  hintText: 'Jones Smith',
+                                  prefixIcon: PhosphorIconsBold.user,
+                                  controller: fullNameController,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your full name';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10.0),
-                                child: const TextField(
-                                  decoration: InputDecoration(
-                                    // labelText: 'Full Name',
-                                    hintText: 'Full Name',
-                                    prefixIcon: Padding(
-                                      padding: EdgeInsets.only(
-                                        left: 20,
-                                        right: 10,
-                                      ),
-                                      child: Icon(PhosphorIconsBold.user),
-                                    ),
-                                    contentPadding: EdgeInsets.all(20.0),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(14),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                                const SizedBox(height: 16),
 
-                              const SizedBox(height: 16),
-
-                              const Text(
-                                'Email Address',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xFF757575),
+                                CustomTextField(
+                                  label: 'Email Address',
+                                  hintText: 'you@example.com',
+                                  prefixIcon: PhosphorIconsBold.envelopeSimple,
+                                  controller: emailController,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your email';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10.0),
-                                child: const TextField(
-                                  decoration: InputDecoration(
-                                    // labelText: 'Email Address',
-                                    hintText: 'Email Address',
-                                    prefixIcon: Padding(
-                                      padding: EdgeInsets.only(
-                                        left: 20,
-                                        right: 10,
-                                      ),
-                                      child: Icon(
-                                        PhosphorIconsBold.envelopeSimple,
-                                      ),
-                                    ),
-                                    contentPadding: EdgeInsets.all(20.0),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(14),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                                const SizedBox(height: 16),
 
-                              const SizedBox(height: 16),
-
-                              const Text(
-                                'Password',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xFF757575),
+                                CustomTextField(
+                                  label: 'Password',
+                                  hintText: '********',
+                                  prefixIcon: PhosphorIconsBold.lock,
+                                  controller: passwordController,
+                                  typePassword: true,
+                                  haveForgotPassword: true,
+                                  validator: (value) {
+                                    if (value == null || value.length < 6) {
+                                      return 'Password must be at least 6 characters';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10.0),
-                                child: TextField(
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    // labelText: 'Password',
-                                    hintText: '************',
-                                    prefixIcon: Padding(
-                                      padding: EdgeInsets.only(
-                                        left: 20,
-                                        right: 10,
-                                      ),
-                                      child: const Icon(PhosphorIconsBold.lock),
-                                    ),
-                                    contentPadding: EdgeInsets.all(20.0),
-                                    border: const OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(14),
-                                      ),
-                                    ),
-                                    suffixIcon: Padding(
-                                      padding: EdgeInsets.only(
-                                        left: 6,
-                                        right: 16,
-                                      ),
-                                      child: IconButton(
-                                        icon: const Icon(
-                                          PhosphorIconsBold.eyeSlash,
+                                const SizedBox(height: 16),
+
+                                CustomTextField(
+                                  label: 'Confirm Password',
+                                  hintText: '********',
+                                  prefixIcon: PhosphorIconsBold.lock,
+                                  controller: confirmPasswordController,
+                                  typePassword: true,
+                                  haveForgotPassword: true,
+                                  validator: (value) {
+                                    if (value == null || value.length < 6) {
+                                      return 'Password must be at least 6 characters';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(height: 40),
+
+                                // ==== 👆 Tap button send form data ====
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 60,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      _signUP();
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.indigo[600],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(14),
                                         ),
-                                        onPressed:
-                                            () {}, // handle toggle visibility
                                       ),
+                                    ),
+                                    child: const Text(
+                                      'Sign Up',
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
-                              ),
-
-                              const SizedBox(height: 16),
-
-                              const Text(
-                                'Confirm Password',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xFF757575),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10.0),
-                                child: TextField(
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    // labelText: 'Confirm Password',
-                                    hintText: '************',
-                                    prefixIcon: Padding(
-                                      padding: EdgeInsets.only(
-                                        left: 20,
-                                        right: 10,
-                                      ),
-                                      child: const Icon(PhosphorIconsBold.lock),
-                                    ),
-                                    contentPadding: EdgeInsets.all(20.0),
-                                    border: const OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(14),
-                                      ),
-                                    ),
-                                    suffixIcon: Padding(
-                                      padding: EdgeInsets.only(
-                                        left: 6,
-                                        right: 16,
-                                      ),
-                                      child: IconButton(
-                                        icon: const Icon(
-                                          PhosphorIconsBold.eyeSlash,
-                                        ),
-                                        onPressed:
-                                            () {}, // handle toggle visibility
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 40),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 60,
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.indigo[600],
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(14),
-                                  ),
-                                ),
-                              ),
-                              child: const Text(
-                                'Sign Up',
-                                style: TextStyle(color: Colors.white),
-                              ),
+                                const SizedBox(height: 16),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 16),
                         ],
                       ),
-                      
+
                       // ==== 👉 Bottom content ====
                       Column(
                         children: [

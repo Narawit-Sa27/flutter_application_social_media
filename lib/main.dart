@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_socail_media/Pages/login-register/OTPCodePage.dart';
+import 'package:flutter_application_socail_media/Pages/login-register/PhoneNumberPage.dart';
 import 'package:flutter_application_socail_media/Pages/login-register/SignInPage.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData.light(),
       debugShowCheckedModeBanner: false, 
-      home:  const SignInPage()
+      home: OtpScreen()
       );
   }
 }
