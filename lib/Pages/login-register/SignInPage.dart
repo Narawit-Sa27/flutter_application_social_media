@@ -7,10 +7,10 @@ class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
   @override
-  SignInPageState createState() => SignInPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class SignInPageState extends State<SignInPage> {
+class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();

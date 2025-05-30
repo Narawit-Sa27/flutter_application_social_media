@@ -3,18 +3,20 @@ import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:get/get.dart';
 
 class PhoneNumberPage extends StatefulWidget {
   const PhoneNumberPage({super.key});
 
   @override
-  PhoneNumberPageState createState() => PhoneNumberPageState();
+  State<PhoneNumberPage> createState() => _PhoneNumberPageState();
 }
 
-class PhoneNumberPageState extends State<PhoneNumberPage> {
+class _PhoneNumberPageState extends State<PhoneNumberPage> {
   final _formKey = GlobalKey<FormState>();
   final phoneNumberController = TextEditingController();
-  late bool _isSubmitted = false;
+  // late bool _isSubmitted = false;
+  RxBool _isSubmitted = false.obs;
 
   void _signIn() async {
     if (phoneNumberController.text.isNotEmpty &&
@@ -25,9 +27,9 @@ class PhoneNumberPageState extends State<PhoneNumberPage> {
       print('Form is valid!');
       print('Full Phone Number: ${_formKey.currentState}');
     } else {
-      setState(() {
-        _isSubmitted = true;
-      });
+      // setState(() {
+      _isSubmitted.value = true;
+      // });
       print('Form is invalid! $_isSubmitted');
     }
     // try {
@@ -105,86 +107,84 @@ class PhoneNumberPageState extends State<PhoneNumberPage> {
                                         ),
                                       ),
                                     ),
-                                    child: IntlPhoneField(
-                                      disableAutoFillHints: true,
-                                      controller: phoneNumberController,
-                                      keyboardType: TextInputType.phone,
-                                      decoration: InputDecoration(
-                                        labelText: 'Phone Number',
-                                        hintText: '65 158 4321',
-                                        contentPadding: const EdgeInsets.all(
-                                          20.0,
-                                        ),
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(14),
+                                    child: Obx(
+                                      () => IntlPhoneField(
+                                        controller: phoneNumberController,
+                                        keyboardType: TextInputType.phone,
+                                        decoration: InputDecoration(
+                                          labelText: 'Phone Number',
+                                          hintText: '65 158 4321',
+                                          contentPadding: const EdgeInsets.all(
+                                            20.0,
                                           ),
-                                          borderSide: BorderSide(
-                                            color: Color(0xFFD6D6D6),
-                                          ),
-                                        ),
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(14),
-                                          ),
-                                          borderSide: BorderSide(
-                                            color: Colors.indigo,
-                                            width: 2,
-                                          ),
-                                        ),
-                                        errorBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(14),
-                                          ),
-                                          borderSide: BorderSide(
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                        focusedErrorBorder:
-                                            const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(14),
+                                          enabledBorder:
+                                              const OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(14),
+                                                ),
+                                                borderSide: BorderSide(
+                                                  color: Color(0xFFD6D6D6),
+                                                ),
                                               ),
-                                              borderSide: BorderSide(
-                                                color: Colors.red,
-                                                width: 2,
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(14),
+                                                ),
+                                                borderSide: BorderSide(
+                                                  color: Colors.indigo,
+                                                  width: 2,
+                                                ),
                                               ),
+                                          errorBorder: const OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(14),
                                             ),
-                                      ),
-                                      initialCountryCode: 'US',
-                                      languageCode: "en",
-                                      onChanged: (phone) {
-                                        print(phone.completeNumber);
-                                      },
-                                      autovalidateMode:
-                                          _isSubmitted
-                                              ? AutovalidateMode.always
-                                              : AutovalidateMode.disabled,
-                                      validator: (PhoneNumber? phone) {
-                                        if (phone == null ||
-                                            phone.number.isEmpty) {
-                                          return 'Please enter your phone number';
-                                        }
+                                            borderSide: BorderSide(
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                          focusedErrorBorder:
+                                              const OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(14),
+                                                ),
+                                                borderSide: BorderSide(
+                                                  color: Colors.red,
+                                                  width: 2,
+                                                ),
+                                              ),
+                                        ),
+                                        initialCountryCode: 'US',
+                                        languageCode: "en",
+                                        onChanged: (phone) {
+                                          print(phone.completeNumber);
+                                        },
+                                        autovalidateMode:
+                                            _isSubmitted.value
+                                                ? AutovalidateMode.always
+                                                : AutovalidateMode.disabled,
+                                        validator: (PhoneNumber? phone) {
+                                          if (phone == null ||
+                                              phone.number.isEmpty) {
+                                            return 'Please enter your phone number';
+                                          }
 
-                                        if (phone.number.isNotEmpty is String) {
-                                          final value = phone.number;
-                                          print(value.runtimeType);
-                                          return 'Please enter your phone number. No text required.';
-                                        }
-                                        return null;
-                                      },
-                                      dropdownIcon: Icon(
-                                        PhosphorIconsBold.caretDown,
-                                        size: 14.0,
-                                      ), // Custom Icon 👈
-                                      dropdownIconPosition:
-                                          IconPosition
-                                              .trailing, // Down Icon position left 👈
-                                      flagsButtonPadding: EdgeInsets.only(
-                                        left: 10.0, // Custom padding flags 👈
-                                      ),
-                                      pickerDialogStyle: PickerDialogStyle(
-                                        backgroundColor: Colors.white,
+                                          return null;
+                                        },
+                                        dropdownIcon: Icon(
+                                          PhosphorIconsBold.caretDown,
+                                          size: 14.0,
+                                        ), // Custom Icon 👈
+                                        dropdownIconPosition:
+                                            IconPosition
+                                                .trailing, // Down Icon position left 👈
+                                        flagsButtonPadding: EdgeInsets.only(
+                                          left: 10.0, // Custom padding flags 👈
+                                        ),
+                                        pickerDialogStyle: PickerDialogStyle(
+                                          backgroundColor: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),

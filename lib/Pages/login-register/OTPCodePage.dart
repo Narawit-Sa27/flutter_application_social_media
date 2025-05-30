@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OtpScreen extends StatefulWidget {
+  const OtpScreen({super.key});
+
   @override
-  _OtpScreenState createState() => _OtpScreenState();
+  State<OtpScreen> createState() => _OtpScreenState();
 }
 
 class _OtpScreenState extends State<OtpScreen> {
   final _formKey = GlobalKey<FormState>();
   RxString otpErrorMessage = ''.obs;
   //create text editing controllers for all text fields
-  List<TextEditingController> _controllers = List.generate(
+  final List<TextEditingController> _controllers = List.generate(
     4,
     (_) => TextEditingController(),
   );
@@ -34,7 +36,7 @@ class _OtpScreenState extends State<OtpScreen> {
       //   );
       // } catch (e) {
       //   print(e);
-        // otpErrorMessage.value = 'Incorrect verification code.';
+      // otpErrorMessage.value = 'Incorrect verification code.';
       // }
       ScaffoldMessenger.of(
         context,
@@ -44,7 +46,7 @@ class _OtpScreenState extends State<OtpScreen> {
   // create focus nodes for all controllers
   //Use FocusNode to move focus between text fields when a user enters or deletes a digit.
 
-  List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
+  final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
 
   //dispose method is used to clean up resources when a widget is removed from the widget tree permanently
   @override
@@ -141,7 +143,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                                 otpErrorMessage.value,
                                                 style: TextStyle(
                                                   color: Colors.red,
-                                                  fontSize: 16.0
+                                                  fontSize: 16.0,
                                                 ),
                                               ),
                                             )
@@ -178,7 +180,8 @@ class _OtpScreenState extends State<OtpScreen> {
                                   Wrap(
                                     direction: Axis.horizontal,
                                     alignment: WrapAlignment.center,
-                                    crossAxisAlignment: WrapCrossAlignment.center,
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
                                     children: [
                                       TextButton(
                                         onPressed: () {

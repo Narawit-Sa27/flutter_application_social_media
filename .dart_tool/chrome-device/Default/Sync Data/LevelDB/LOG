@@ -1,17 +1,18 @@
-2025/05/29-15:02:57.366 22a4 Creating DB C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.7a390ce9\flutter_tools_chrome_device.7d5e27\Default\Sync Data\LevelDB since it was missing.
-2025/05/29-15:02:57.371 22a4 Reusing MANIFEST C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.7a390ce9\flutter_tools_chrome_device.7d5e27\Default\Sync Data\LevelDB/MANIFEST-000001
-2025/05/29-15:03:15.071 22a4 Level-0 table #5: started
-2025/05/29-15:03:15.075 22a4 Level-0 table #5: 275389 bytes OK
-2025/05/29-15:03:15.076 22a4 Delete type=0 #3
-2025/05/29-17:58:17.557 29d0 Level-0 table #7: started
-2025/05/29-17:58:17.561 29d0 Level-0 table #7: 122907 bytes OK
-2025/05/29-17:58:17.562 29d0 Delete type=0 #4
-2025/05/29-18:37:45.560 29d0 Level-0 table #9: started
-2025/05/29-18:37:45.564 29d0 Level-0 table #9: 117439 bytes OK
-2025/05/29-18:37:45.565 29d0 Delete type=0 #6
-2025/05/29-19:59:50.953 29d0 Level-0 table #11: started
-2025/05/29-19:59:50.964 29d0 Level-0 table #11: 110795 bytes OK
-2025/05/29-19:59:50.966 29d0 Delete type=0 #8
-2025/05/29-21:05:25.587 29d0 Level-0 table #13: started
-2025/05/29-21:05:25.591 29d0 Level-0 table #13: 123108 bytes OK
-2025/05/29-21:05:25.594 29d0 Delete type=0 #10
+2025/05/30-22:50:18.140 2ff0 Reusing MANIFEST C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.5693586b\flutter_tools_chrome_device.e3538f37\Default\Sync Data\LevelDB/MANIFEST-000001
+2025/05/30-22:50:18.141 2ff0 Recovering log #12
+2025/05/30-22:50:18.144 2ff0 Reusing old log C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.5693586b\flutter_tools_chrome_device.e3538f37\Default\Sync Data\LevelDB/000012.log 
+2025/05/30-22:51:27.879 2ff0 Level-0 table #16: started
+2025/05/30-22:51:27.882 2ff0 Level-0 table #16: 149579 bytes OK
+2025/05/30-22:51:27.883 2ff0 Delete type=0 #12
+2025/05/30-22:51:27.883 2ff0 Compacting 4@0 + 1@1 files
+2025/05/30-22:51:27.887 2ff0 Generated table #17@0: 131 keys, 18788 bytes
+2025/05/30-22:51:27.887 2ff0 Compacted 4@0 + 1@1 files => 18788 bytes
+2025/05/30-22:51:27.888 2ff0 compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/05/30-22:51:27.889 2ff0 Delete type=2 #7
+2025/05/30-22:51:27.889 2ff0 Delete type=2 #9
+2025/05/30-22:51:27.889 2ff0 Delete type=2 #11
+2025/05/30-22:51:27.889 2ff0 Delete type=2 #13
+2025/05/30-22:51:27.889 2ff0 Delete type=2 #16
+2025/05/30-23:09:45.521 2ff0 Level-0 table #19: started
+2025/05/30-23:09:45.525 2ff0 Level-0 table #19: 155412 bytes OK
+2025/05/30-23:09:45.525 2ff0 Delete type=0 #15

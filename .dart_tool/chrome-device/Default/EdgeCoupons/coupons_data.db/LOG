@@ -1,5 +1,6 @@
-2025/05/29-15:02:59.960 64ac Creating DB C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.7a390ce9\flutter_tools_chrome_device.7d5e27\Default\EdgeCoupons/coupons_data.db since it was missing.
-2025/05/29-15:02:59.967 64ac Reusing MANIFEST C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.7a390ce9\flutter_tools_chrome_device.7d5e27\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
-2025/05/29-15:03:00.304 29d0 Level-0 table #5: started
-2025/05/29-15:03:00.308 29d0 Level-0 table #5: 670808 bytes OK
-2025/05/29-15:03:00.309 29d0 Delete type=0 #3
+2025/05/30-22:50:28.351 197c Reusing MANIFEST C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.5693586b\flutter_tools_chrome_device.e3538f37\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2025/05/30-22:50:28.352 197c Recovering log #4
+2025/05/30-22:50:28.353 197c Reusing old log C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.5693586b\flutter_tools_chrome_device.e3538f37\Default\EdgeCoupons/coupons_data.db/000004.log 
+2025/05/30-22:50:28.473 2ff0 Level-0 table #8: started
+2025/05/30-22:50:28.475 2ff0 Level-0 table #8: 670968 bytes OK
+2025/05/30-22:50:28.477 2ff0 Delete type=0 #4
