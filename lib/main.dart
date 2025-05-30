@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_socail_media/Pages/login-register/ChangePasswordPage.dart';
 import 'package:flutter_application_socail_media/Pages/login-register/OTPCodePage.dart';
 import 'package:flutter_application_socail_media/Pages/login-register/PhoneNumberPage.dart';
 import 'package:flutter_application_socail_media/Pages/login-register/SignInPage.dart';
@@ -16,9 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.light(),
-      debugShowCheckedModeBanner: false, 
-      home: OtpScreen()
-      );
+      debugShowCheckedModeBanner: false,
+      home: SignInPage(),
+    );
   }
 }
 
@@ -87,7 +88,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
         ),
       ],
       navBarBuilder:
-          (navBarConfig) => CustomNavBar( // Style5BottomNavBar(
+          (navBarConfig) => CustomNavBar(
+            // Style5BottomNavBar(
             navBarConfig: navBarConfig,
             navBarDecoration: NavBarDecoration(
               color: Colors.white,

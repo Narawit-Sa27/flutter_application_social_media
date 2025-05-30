@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_socail_media/Pages/login-register/SignUpPage.dart';
-import 'package:flutter_application_socail_media/Widget-component/TextFieldInput.dart';
+import 'package:flutter_application_socail_media/components/TextFieldInput.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class SignInPage extends StatefulWidget {
@@ -34,6 +34,14 @@ class SignInPageState extends State<SignInPage> {
     // } catch (e) {
     //   print(e);
     // }
+  }
+
+  // Exit page clear value
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -112,7 +120,7 @@ class SignInPageState extends State<SignInPage> {
                                   ),
                                   const SizedBox(height: 40),
 
-                                  // ==== 👆 Tap button send form data ====
+                                  // ==== 👉 Tap button send form data ====
                                   SizedBox(
                                     width: double.infinity,
                                     height: 60,
@@ -120,6 +128,7 @@ class SignInPageState extends State<SignInPage> {
                                       onPressed: () {
                                         _signIn();
                                       },
+                                      // ==== 👆 Tap button function ====
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.indigo[600],
                                         shape: const RoundedRectangleBorder(

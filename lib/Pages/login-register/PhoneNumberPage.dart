@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_socail_media/Pages/login-register/SignUpPage.dart';
-import 'package:flutter_application_socail_media/Widget-component/TextFieldInput.dart';
+import 'package:intl_phone_field/country_picker_dialog.dart';
+import 'package:intl_phone_field/phone_number.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class PhoneNumberPage extends StatefulWidget {
   const PhoneNumberPage({super.key});
@@ -12,15 +13,22 @@ class PhoneNumberPage extends StatefulWidget {
 
 class PhoneNumberPageState extends State<PhoneNumberPage> {
   final _formKey = GlobalKey<FormState>();
-
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  late bool _isSubmitted = false;
 
   void _signIn() async {
-    if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Processing Data')));
+    if (phoneNumberController.text.isNotEmpty &&
+        _formKey.currentState!.validate()) {
+      // ScaffoldMessenger.of(
+      //   context,
+      // ).showSnackBar(const SnackBar(content: Text('Processing Data')));
+      print('Form is valid!');
+      print('Full Phone Number: ${_formKey.currentState}');
+    } else {
+      setState(() {
+        _isSubmitted = true;
+      });
+      print('Form is invalid! $_isSubmitted');
     }
     // try {
     //   final user = await _userService.login(
@@ -34,6 +42,13 @@ class PhoneNumberPageState extends State<PhoneNumberPage> {
     // } catch (e) {
     //   print(e);
     // }
+  }
+
+  // Exit page clear value
+  @override
+  void dispose() {
+    phoneNumberController.dispose();
+    super.dispose();
   }
 
   @override
@@ -60,7 +75,7 @@ class PhoneNumberPageState extends State<PhoneNumberPage> {
                           children: [
                             const SizedBox(height: 50),
                             const Text(
-                              'Sign In Now',
+                              'Enter Phone Number',
                               style: TextStyle(
                                 fontSize: 28,
                                 fontWeight: FontWeight.bold,
@@ -75,27 +90,107 @@ class PhoneNumberPageState extends State<PhoneNumberPage> {
                             ),
                             const SizedBox(height: 50),
 
-                            // ==== 📥 Form input Email & Password ====
+                            // ==== 📥 Form input Phone number ====
                             Form(
                               key: _formKey,
                               child: Column(
                                 children: [
-                                  CustomTextField(
-                                    label: 'Phone Number',
-                                    hintText: '65 158 4321',
-                                    prefixIcon:
-                                        PhosphorIconsBold.envelopeSimple,
-                                    controller: emailController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter your email';
-                                      }
-                                      return null;
-                                    },
+                                  Theme(
+                                    data: Theme.of(context).copyWith(
+                                      dialogTheme: DialogTheme(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ), // 👈 Custom round dialog
+                                        ),
+                                      ),
+                                    ),
+                                    child: IntlPhoneField(
+                                      disableAutoFillHints: true,
+                                      controller: phoneNumberController,
+                                      keyboardType: TextInputType.phone,
+                                      decoration: InputDecoration(
+                                        labelText: 'Phone Number',
+                                        hintText: '65 158 4321',
+                                        contentPadding: const EdgeInsets.all(
+                                          20.0,
+                                        ),
+                                        enabledBorder: const OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(14),
+                                          ),
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFD6D6D6),
+                                          ),
+                                        ),
+                                        focusedBorder: const OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(14),
+                                          ),
+                                          borderSide: BorderSide(
+                                            color: Colors.indigo,
+                                            width: 2,
+                                          ),
+                                        ),
+                                        errorBorder: const OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(14),
+                                          ),
+                                          borderSide: BorderSide(
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                        focusedErrorBorder:
+                                            const OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(14),
+                                              ),
+                                              borderSide: BorderSide(
+                                                color: Colors.red,
+                                                width: 2,
+                                              ),
+                                            ),
+                                      ),
+                                      initialCountryCode: 'US',
+                                      languageCode: "en",
+                                      onChanged: (phone) {
+                                        print(phone.completeNumber);
+                                      },
+                                      autovalidateMode:
+                                          _isSubmitted
+                                              ? AutovalidateMode.always
+                                              : AutovalidateMode.disabled,
+                                      validator: (PhoneNumber? phone) {
+                                        if (phone == null ||
+                                            phone.number.isEmpty) {
+                                          return 'Please enter your phone number';
+                                        }
+
+                                        if (phone.number.isNotEmpty is String) {
+                                          final value = phone.number;
+                                          print(value.runtimeType);
+                                          return 'Please enter your phone number. No text required.';
+                                        }
+                                        return null;
+                                      },
+                                      dropdownIcon: Icon(
+                                        PhosphorIconsBold.caretDown,
+                                        size: 14.0,
+                                      ), // Custom Icon 👈
+                                      dropdownIconPosition:
+                                          IconPosition
+                                              .trailing, // Down Icon position left 👈
+                                      flagsButtonPadding: EdgeInsets.only(
+                                        left: 10.0, // Custom padding flags 👈
+                                      ),
+                                      pickerDialogStyle: PickerDialogStyle(
+                                        backgroundColor: Colors.white,
+                                      ),
+                                    ),
                                   ),
                                   const SizedBox(height: 40),
 
-                                  // ==== 👆 Tap button send form data ====
+                                  // ==== 👉 Tap button send form data ====
                                   SizedBox(
                                     width: double.infinity,
                                     height: 60,
@@ -103,6 +198,7 @@ class PhoneNumberPageState extends State<PhoneNumberPage> {
                                       onPressed: () {
                                         _signIn();
                                       },
+                                      // ==== 👆 Tap button function ====
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.indigo[600],
                                         shape: const RoundedRectangleBorder(
@@ -112,7 +208,7 @@ class PhoneNumberPageState extends State<PhoneNumberPage> {
                                         ),
                                       ),
                                       child: const Text(
-                                        'Sign In',
+                                        'Save',
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),

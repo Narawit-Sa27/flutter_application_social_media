@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_socail_media/Pages/login-register/SignInPage.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:flutter_application_socail_media/Widget-component/TextFieldInput.dart';
+import 'package:flutter_application_socail_media/components/TextFieldInput.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -35,6 +36,16 @@ class SignUpPageState extends State<SignUpPage> {
     // } catch (e) {
     //   print(e);
     // }
+  }
+
+  // Exit page clear value
+  @override
+  void dispose() {
+    fullNameController .dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -113,7 +124,6 @@ class SignUpPageState extends State<SignUpPage> {
                                   prefixIcon: PhosphorIconsBold.lock,
                                   controller: passwordController,
                                   typePassword: true,
-                                  haveForgotPassword: true,
                                   validator: (value) {
                                     if (value == null || value.length < 6) {
                                       return 'Password must be at least 6 characters';
@@ -129,7 +139,6 @@ class SignUpPageState extends State<SignUpPage> {
                                   prefixIcon: PhosphorIconsBold.lock,
                                   controller: confirmPasswordController,
                                   typePassword: true,
-                                  haveForgotPassword: true,
                                   validator: (value) {
                                     if (value == null || value.length < 6) {
                                       return 'Password must be at least 6 characters';
@@ -139,7 +148,7 @@ class SignUpPageState extends State<SignUpPage> {
                                 ),
                                 const SizedBox(height: 40),
 
-                                // ==== 👆 Tap button send form data ====
+                                // ==== 👉 Tap button send form data ====
                                 SizedBox(
                                   width: double.infinity,
                                   height: 60,
@@ -147,6 +156,7 @@ class SignUpPageState extends State<SignUpPage> {
                                     onPressed: () {
                                       _signUP();
                                     },
+                                    // ==== 👆 Tap button function ====
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.indigo[600],
                                       shape: RoundedRectangleBorder(
@@ -184,6 +194,12 @@ class SignUpPageState extends State<SignUpPage> {
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
+                                  // Navigator.pushReplacement(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => const SignInPage(),
+                                  //   ),
+                                  // );
                                 },
                                 child: const Text(
                                   'Sign In',

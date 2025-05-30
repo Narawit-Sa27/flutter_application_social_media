@@ -86,6 +86,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "intl_phone_field",
+      "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/intl_phone_field-3.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "leak_tracker",
       "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/leak_tracker-10.0.8",
       "packageUri": "lib/",
@@ -218,7 +224,7 @@
       "languageVersion": "3.7"
     }
   ],
-  "generated": "2025-05-29T13:55:11.468562Z",
+  "generated": "2025-05-30T06:54:07.500375Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///C:/Users/Windows11/Desktop/Flutter/flutter",
