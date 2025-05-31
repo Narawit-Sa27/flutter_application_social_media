@@ -95,29 +95,38 @@ class _OtpScreenState extends State<OtpScreen> {
                                   style: TextStyle(color: Color(0xFF757575)),
                                   textAlign: TextAlign.center,
                                 ),
-                                const Text(
-                                  'We have sent the code verification to +1*****5241',
-                                  style: TextStyle(color: Color(0xFF757575)),
-                                  textAlign: TextAlign.center,
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text(
-                                    'Change phone number?',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.indigo,
+                                Wrap(
+                                  direction: Axis.horizontal,
+                                  alignment: WrapAlignment.center,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  children: [
+                                    const Text(
+                                      'We have sent the code verification to +1*****5241',
+                                      style: TextStyle(
+                                        color: Color(0xFF757575),
+                                      ),
+                                      textAlign: TextAlign.center,
                                     ),
-                                    textAlign: TextAlign.center,
-                                  ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        'Change phone number?',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.indigo,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
                             const SizedBox(height: 50),
 
-                            // ==== 📥 Form input Phone number ====
+                            // ==== 📥 Form input OTP Code ====
                             Form(
                               key: _formKey,
                               autovalidateMode:

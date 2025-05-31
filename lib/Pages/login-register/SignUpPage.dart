@@ -79,7 +79,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           const SizedBox(height: 8),
                           const Text(
-                            'Please enter your information below in order to login to your account.',
+                            'Create your free account in just a few simple steps.',
                             style: TextStyle(color: Color(0xFF757575)),
                             textAlign: TextAlign.center,
                           ),

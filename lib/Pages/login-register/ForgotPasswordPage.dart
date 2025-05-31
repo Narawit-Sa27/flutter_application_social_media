@@ -75,13 +75,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             ),
                             const SizedBox(height: 10),
                             const Text(
-                              'Please enter your information below in order to login to your account.',
+                              "We'll send you a link or code to reset your password.",
                               style: TextStyle(color: Color(0xFF757575)),
                               textAlign: TextAlign.center,
                             ),
                             const SizedBox(height: 50),
 
-                            // ==== 📥 Form input Email & Password ====
+                            // ==== 📥 Form input Email ====
                             Form(
                               key: _formKey,
                               child: Column(

@@ -75,13 +75,13 @@ class _ChangePassPageState extends State<ChangePassPage> {
                           ),
                           const SizedBox(height: 8),
                           const Text(
-                            'Please enter your information below in order to login to your account.',
+                            'Please enter your current and new password to make changes.',
                             style: TextStyle(color: Color(0xFF757575)),
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 30),
 
-                          // ==== 📥 Form input Full Name, Email, Password & Confirm Password ====
+                          // ==== 📥 Form input New Password & Confirm New Password ====
                           Form(
                             key: _formKey,
                             child: Column(
