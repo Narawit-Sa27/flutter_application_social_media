@@ -1,7 +1,24 @@
-2025/05/31-14:29:19.122 7718 Reusing MANIFEST C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.2351317b\flutter_tools_chrome_device.c4853fc5\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
-2025/05/31-14:29:19.123 7718 Recovering log #7
-2025/05/31-14:29:19.123 7718 Reusing old log C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.2351317b\flutter_tools_chrome_device.c4853fc5\Default\EdgeCoupons/coupons_data.db/000007.log 
-2025/05/31-14:29:19.124 7718 Delete type=0 #4
-2025/05/31-14:29:19.332 2138 Level-0 table #11: started
-2025/05/31-14:29:19.336 2138 Level-0 table #11: 670968 bytes OK
-2025/05/31-14:29:19.337 2138 Delete type=0 #7
+2025/06/01-18:31:56.366 7c94 Reusing MANIFEST C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.d34c488d\flutter_tools_chrome_device.63923655\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2025/06/01-18:31:56.368 7c94 Recovering log #36
+2025/06/01-18:31:56.369 7c94 Reusing old log C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.d34c488d\flutter_tools_chrome_device.63923655\Default\EdgeCoupons/coupons_data.db/000036.log 
+2025/06/01-18:31:56.370 7c94 Delete type=0 #4
+2025/06/01-18:31:56.370 7c94 Delete type=0 #7
+2025/06/01-18:31:56.370 7c94 Delete type=2 #8
+2025/06/01-18:31:56.371 7c94 Delete type=0 #10
+2025/06/01-18:31:56.371 7c94 Delete type=2 #11
+2025/06/01-18:31:56.371 7c94 Delete type=0 #13
+2025/06/01-18:31:56.371 7c94 Delete type=2 #14
+2025/06/01-18:31:56.371 7c94 Delete type=0 #16
+2025/06/01-18:31:56.371 7c94 Delete type=2 #17
+2025/06/01-18:31:56.371 7c94 Delete type=0 #19
+2025/06/01-18:31:56.392 7c94 Delete type=2 #21
+2025/06/01-18:31:56.392 7c94 Delete type=0 #23
+2025/06/01-18:31:56.392 7c94 Delete type=2 #24
+2025/06/01-18:31:56.392 7c94 Delete type=0 #26
+2025/06/01-18:31:56.392 7c94 Delete type=2 #27
+2025/06/01-18:31:56.392 7c94 Delete type=0 #29
+2025/06/01-18:31:56.393 7c94 Delete type=2 #30
+2025/06/01-18:31:56.393 7c94 Delete type=0 #32
+2025/06/01-18:31:56.610 4438 Level-0 table #40: started
+2025/06/01-18:31:56.613 4438 Level-0 table #40: 670968 bytes OK
+2025/06/01-18:31:56.615 4438 Delete type=0 #36

@@ -1,8 +1,25 @@
-2025/05/31-16:27:44.025 76a8 Reusing MANIFEST C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.bdf66a24\flutter_tools_chrome_device.51a11ea4\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
-2025/05/31-16:27:44.026 76a8 Recovering log #10
-2025/05/31-16:27:44.027 76a8 Reusing old log C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.bdf66a24\flutter_tools_chrome_device.51a11ea4\Default\EdgeCoupons/coupons_data.db/000010.log 
-2025/05/31-16:27:44.029 76a8 Delete type=0 #4
-2025/05/31-16:27:44.029 76a8 Delete type=0 #7
-2025/05/31-16:27:44.159 174c Level-0 table #14: started
-2025/05/31-16:27:44.161 174c Level-0 table #14: 670968 bytes OK
-2025/05/31-16:27:44.163 174c Delete type=0 #10
+2025/06/01-18:34:07.365 4b54 Reusing MANIFEST C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.45cae132\flutter_tools_chrome_device.7df2ecd0\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2025/06/01-18:34:07.367 4b54 Recovering log #39
+2025/06/01-18:34:07.367 4b54 Reusing old log C:\Users\WINDOW~1\AppData\Local\Temp\flutter_tools.45cae132\flutter_tools_chrome_device.7df2ecd0\Default\EdgeCoupons/coupons_data.db/000039.log 
+2025/06/01-18:34:07.369 4b54 Delete type=0 #4
+2025/06/01-18:34:07.369 4b54 Delete type=0 #7
+2025/06/01-18:34:07.369 4b54 Delete type=2 #8
+2025/06/01-18:34:07.369 4b54 Delete type=0 #10
+2025/06/01-18:34:07.369 4b54 Delete type=2 #11
+2025/06/01-18:34:07.369 4b54 Delete type=0 #13
+2025/06/01-18:34:07.369 4b54 Delete type=2 #14
+2025/06/01-18:34:07.369 4b54 Delete type=0 #16
+2025/06/01-18:34:07.392 4b54 Delete type=2 #17
+2025/06/01-18:34:07.393 4b54 Delete type=0 #19
+2025/06/01-18:34:07.393 4b54 Delete type=2 #21
+2025/06/01-18:34:07.393 4b54 Delete type=0 #23
+2025/06/01-18:34:07.393 4b54 Delete type=2 #24
+2025/06/01-18:34:07.393 4b54 Delete type=0 #26
+2025/06/01-18:34:07.394 4b54 Delete type=2 #27
+2025/06/01-18:34:07.394 4b54 Delete type=0 #29
+2025/06/01-18:34:07.394 4b54 Delete type=2 #30
+2025/06/01-18:34:07.394 4b54 Delete type=0 #32
+2025/06/01-18:34:07.394 4b54 Delete type=0 #36
+2025/06/01-18:34:07.532 2ab0 Level-0 table #43: started
+2025/06/01-18:34:07.535 2ab0 Level-0 table #43: 670968 bytes OK
+2025/06/01-18:34:07.536 2ab0 Delete type=0 #39

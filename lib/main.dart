@@ -143,11 +143,11 @@ class SocialApp extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(PhosphorIconsRegular.magnifyingGlass, size: 22.0),
+            icon: const Icon(PhosphorIconsRegular.magnifyingGlass, size: 24.0),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(PhosphorIconsRegular.bellSimple, size: 22.0),
+            icon: const Icon(PhosphorIconsRegular.bellSimple, size: 24.0),
             onPressed: () {},
           ),
         ],

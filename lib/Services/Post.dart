@@ -4,7 +4,7 @@ class Post {
   final String userHandle;
   final String timeAgo;
   final String postText;
-  final String imageUrl;
+  final String? imageUrl;
   final int likes;
   final int comments;
   final int shares;
@@ -15,7 +15,7 @@ class Post {
     required this.userHandle,
     required this.timeAgo,
     required this.postText,
-    required this.imageUrl,
+    this.imageUrl,
     required this.likes,
     required this.comments,
     required this.shares,
