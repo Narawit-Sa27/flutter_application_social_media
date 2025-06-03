@@ -1,9 +1,11 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:get/get.dart';
 import 'package:flutter_application_socail_media/Services/Post.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:dotted_border/dotted_border.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -101,85 +103,190 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.indigo[50],
-      body:
-          _isFirstLoad
-              ? const Center(
-                child: CircularProgressIndicator(color: Colors.indigoAccent),
-              )
-              : RefreshIndicator(
-                onRefresh: _refresh,
-                color: Colors.indigoAccent,
-                child: ListView.builder(
-                  controller: _scrollController,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount:
-                      _posts.length + (_hasMore ? 2 : 1), // +1 สำหรับ StoryBar
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
-                      // 📸 Story Bar เป็น item แรก
-                      return SizedBox(
-                        height: 90,
-                        child: ListView.separated(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 10,
-                          ),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 10,
-                          separatorBuilder:
-                              (context, index) => const SizedBox(width: 12),
-                          itemBuilder:
-                              (context, index) => Column(
-                                children: [
-                                  const CircleAvatar(
-                                    radius: 25,
-                                    backgroundImage: NetworkImage(
-                                      'https://media.istockphoto.com/id/2157394121/photo/portrait-of-confident-businesswoman-standing-in-office.webp?a=1&b=1&s=612x612&w=0&k=20&c=eK6hSqdHlfABi60Ipge_SkS1NsHGNf8Lnm0WSrZFGgA=',
-                                    ),
-                                  ),
-                                  Text(
-                                    'username',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey[600],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                        ),
-                      );
-                    }
-
-                    final adjustedIndex = index - 1;
-
-                    if (adjustedIndex < _posts.length) {
-                      final post = _posts[adjustedIndex];
-                      return SocialPostCard(
-                        userProfile: post.userProfile,
-                        userName: post.userName,
-                        userHandle: post.userHandle,
-                        timeAgo: post.timeAgo,
-                        postText: post.postText,
-                        imageUrl: post.imageUrl,
-                        likes: post.likes,
-                        comments: post.comments,
-                        shares: post.shares,
-                      );
-                    } else {
-                      return const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.indigoAccent,
-                          ),
-                        ),
-                      );
-                    }
-                  },
+    return Theme(
+      data: ThemeData.light(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: Row(
+            children: [
+              Image.asset(
+                'assets/social_icon.png', // ไอคอนแอป
+                width: 24,
+                height: 24,
+              ),
+              const SizedBox(width: 8),
+              const Text(
+                'Commune',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
+            ],
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(
+                PhosphorIconsRegular.magnifyingGlass,
+                size: 24.0,
+              ),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Badge(
+                label: Text("9"),
+                padding: EdgeInsets.all(2),
+                child: const Icon(PhosphorIconsRegular.bellSimple, size: 24.0),
+              ),
+              onPressed: () {},
+            ),
+          ],
+        ),
+        backgroundColor: Colors.indigoAccent[50],
+        body:
+            _isFirstLoad
+                ? const Center(
+                  child: CircularProgressIndicator(color: Colors.indigoAccent),
+                )
+                : RefreshIndicator(
+                  onRefresh: _refresh,
+                  color: Colors.indigoAccent,
+                  backgroundColor: Colors.white,
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount:
+                        _posts.length +
+                        (_hasMore ? 2 : 1), // +1 สำหรับ StoryBar
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        // 📸 Story Bar เป็น item แรก
+                        return SizedBox(
+                          height: 110,
+                          child: ColoredBox(
+                            color: Colors.white,
+                            child: ListView.separated(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 10,
+                              ),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 10,
+                              separatorBuilder:
+                                  (context, index) => const SizedBox(width: 12),
+                              itemBuilder:
+                                  (context, index) =>
+                                      index == 0
+                                          ? Column(
+                                            children: [
+                                              DottedBorder(
+                                                options:
+                                                    CustomPathDottedBorderOptions(
+                                                      customPath: (size) {
+                                                        // สร้าง path วงกลม
+                                                        final radius =
+                                                            min(
+                                                              size.width,
+                                                              size.height,
+                                                            ) /
+                                                            2;
+                                                        return Path()..addOval(
+                                                          Rect.fromCircle(
+                                                            center: Offset(
+                                                              size.width / 2,
+                                                              size.height / 2,
+                                                            ),
+                                                            radius: radius,
+                                                          ),
+                                                        );
+                                                      },
+                                                      dashPattern: [8, 12],
+                                                      color:
+                                                          Colors.indigoAccent,
+                                                      strokeWidth: 2,
+                                                    ),
+                                                child: SizedBox(
+                                                  height: 65,
+                                                  width: 65,
+                                                  child: IconButton(
+                                                    onPressed: () {},
+                                                    icon: const Icon(
+                                                      PhosphorIconsRegular.plus,
+                                                      size: 24.0,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              Text(
+                                                'Add to story',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.grey[600],
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                          : Column(
+                                            children: [
+                                              SizedBox(
+                                                height: 70,
+                                                width: 70,
+                                                child: const CircleAvatar(
+                                                  radius: 25,
+                                                  backgroundImage: NetworkImage(
+                                                    'https://media.istockphoto.com/id/2157394121/photo/portrait-of-confident-businesswoman-standing-in-office.webp?a=1&b=1&s=612x612&w=0&k=20&c=eK6hSqdHlfABi60Ipge_SkS1NsHGNf8Lnm0WSrZFGgA=',
+                                                  ),
+                                                ),
+                                              ),
+
+                                              Text(
+                                                'username',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.grey[600],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                            ),
+                          ),
+                        );
+                      }
+
+                      final adjustedIndex = index - 1;
+
+                      if (adjustedIndex < _posts.length) {
+                        final post = _posts[adjustedIndex];
+                        return SocialPostCard(
+                          index: index,
+                          userProfile: post.userProfile,
+                          userName: post.userName,
+                          userHandle: post.userHandle,
+                          timeAgo: post.timeAgo,
+                          postText: post.postText,
+                          imageUrl: post.imageUrl,
+                          likes: post.likes,
+                          comments: post.comments,
+                          shares: post.shares,
+                        );
+                      } else {
+                        return const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.indigoAccent,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ),
+      ),
     );
   }
 
@@ -191,6 +298,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class SocialPostCard extends StatelessWidget {
+  final int? index;
   final String userProfile;
   final String userName;
   final String userHandle;
@@ -203,6 +311,7 @@ class SocialPostCard extends StatelessWidget {
 
   SocialPostCard({
     super.key,
+    this.index,
     required this.userProfile,
     required this.userName,
     required this.userHandle,
@@ -239,7 +348,12 @@ class SocialPostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 4.0), // Margin between Card
+      margin:
+          (index != null && index == 1)
+              ? const EdgeInsets.symmetric(vertical: 0)
+              : const EdgeInsets.symmetric(
+                vertical: 4.0,
+              ), // Margin between Card
       color: Colors.white,
       elevation: 2.0, // shadow Card
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
@@ -305,7 +419,6 @@ class SocialPostCard extends StatelessWidget {
                                 child: PopupMenuItem(
                                   value: value,
                                   child: Column(
-                                    // mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       if (index == 3 ||
                                           index ==
@@ -409,13 +522,13 @@ class SocialPostCard extends StatelessWidget {
                           isSelectHeart.value
                               ? Icon(
                                 PhosphorIconsFill.heart,
-                                size: 24,
+                                size: 18,
                                 color: Colors.red,
                               )
                               : Icon(
                                 PhosphorIconsRegular.heart,
-                                size: 24,
-                                color: Colors.grey[700],
+                                size: 18,
+                                color: Colors.grey[800],
                               ),
                           '$likes',
                           () {
@@ -426,10 +539,19 @@ class SocialPostCard extends StatelessWidget {
                       _buildActionButton(
                         Icon(
                           PhosphorIconsRegular.chatCircleDots,
-                          size: 24,
-                          color: Colors.grey[700],
+                          size: 18,
+                          color: Colors.grey[800],
                         ),
                         '$comments',
+                        () {},
+                      ),
+                      _buildActionButton(
+                        Icon(
+                          PhosphorIconsRegular.paperPlaneTilt,
+                          size: 18,
+                          color: Colors.grey[800],
+                        ),
+                        '$shares',
                         () {},
                       ),
                     ],
@@ -438,10 +560,10 @@ class SocialPostCard extends StatelessWidget {
                   _buildActionButton(
                     Icon(
                       PhosphorIconsRegular.shareFat,
-                      size: 24,
-                      color: Colors.grey[700],
+                      size: 18,
+                      color: Colors.grey[800],
                     ),
-                    '$shares',
+                    'Reply',
                     () {},
                   ),
                 ],
@@ -461,7 +583,7 @@ class SocialPostCard extends StatelessWidget {
     return TextButton.icon(
       onPressed: onPressed,
       icon: iconWidget,
-      label: Text(text, style: TextStyle(color: Colors.grey[700])),
+      label: Text(text, style: TextStyle(color: Colors.grey[800])),
       style: TextButton.styleFrom(backgroundColor: Colors.grey[100]),
     );
   }

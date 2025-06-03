@@ -50,102 +50,104 @@ class _ChangePassPageState extends State<ChangePassPage> {
       builder: (context, viewportConstraints) {
         return Scaffold(
           backgroundColor: const Color(0xFFFFFFFF),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Center(
-              child: SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: viewportConstraints.maxHeight,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // ==== 👉 Top content ====
-                      Column(
-                        children: [
-                          const SizedBox(height: 50),
-                          const Text(
-                            'Change Password',
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: viewportConstraints.maxHeight,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // ==== 👉 Top content ====
+                        Column(
+                          children: [
+                            const SizedBox(height: 50),
+                            const Text(
+                              'Change Password',
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 8),
-                          const Text(
-                            'Please enter your current and new password to make changes.',
-                            style: TextStyle(color: Color(0xFF757575)),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 30),
+                            const SizedBox(height: 8),
+                            const Text(
+                              'Please enter your current and new password to make changes.',
+                              style: TextStyle(color: Color(0xFF757575)),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 30),
 
-                          // ==== 📥 Form input New Password & Confirm New Password ====
-                          Form(
-                            key: _formKey,
-                            child: Column(
-                              children: [
-                                CustomTextField(
-                                  label: 'New Password',
-                                  hintText: '********',
-                                  prefixIcon: PhosphorIconsBold.lock,
-                                  controller: passwordController,
-                                  typePassword: true,
-                                  validator: (value) {
-                                    if (value == null || value.length < 6) {
-                                      return 'Password must be at least 6 characters';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                const SizedBox(height: 16),
-
-                                CustomTextField(
-                                  label: 'Confirm New Password',
-                                  hintText: '********',
-                                  prefixIcon: PhosphorIconsBold.lock,
-                                  controller: confirmPasswordController,
-                                  typePassword: true,
-                                  validator: (value) {
-                                    if (value == null || value.length < 6) {
-                                      return 'Password must be at least 6 characters';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                const SizedBox(height: 40),
-
-                                // ==== 👉 Tap button send form data ====
-                                SizedBox(
-                                  width: double.infinity,
-                                  height: 60,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      _ChangePass();
+                            // ==== 📥 Form input New Password & Confirm New Password ====
+                            Form(
+                              key: _formKey,
+                              child: Column(
+                                children: [
+                                  CustomTextField(
+                                    label: 'New Password',
+                                    hintText: '********',
+                                    prefixIcon: PhosphorIconsBold.lock,
+                                    controller: passwordController,
+                                    typePassword: true,
+                                    validator: (value) {
+                                      if (value == null || value.length < 6) {
+                                        return 'Password must be at least 6 characters';
+                                      }
+                                      return null;
                                     },
-                                    // ==== 👆 Tap button function ====
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.indigo[600],
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(14),
+                                  ),
+                                  const SizedBox(height: 16),
+
+                                  CustomTextField(
+                                    label: 'Confirm New Password',
+                                    hintText: '********',
+                                    prefixIcon: PhosphorIconsBold.lock,
+                                    controller: confirmPasswordController,
+                                    typePassword: true,
+                                    validator: (value) {
+                                      if (value == null || value.length < 6) {
+                                        return 'Password must be at least 6 characters';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(height: 40),
+
+                                  // ==== 👉 Tap button send form data ====
+                                  SizedBox(
+                                    width: double.infinity,
+                                    height: 60,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        _ChangePass();
+                                      },
+                                      // ==== 👆 Tap button function ====
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.indigo[600],
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(14),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    child: const Text(
-                                      'Change Password',
-                                      style: TextStyle(color: Colors.white),
+                                      child: const Text(
+                                        'Change Password',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 16),
-                              ],
+                                  const SizedBox(height: 16),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

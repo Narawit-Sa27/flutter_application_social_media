@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_socail_media/Pages/ChatScreen.dart';
 import 'package:flutter_application_socail_media/Pages/HomeScreen.dart';
+import 'package:flutter_application_socail_media/Pages/ProfileScreen.dart';
+import 'package:flutter_application_socail_media/Pages/ReelScreen.dart';
 import 'package:flutter_application_socail_media/Pages/login-register/ChangePasswordPage.dart';
 import 'package:flutter_application_socail_media/Pages/login-register/OTPCodePage.dart';
 import 'package:flutter_application_socail_media/Pages/login-register/PhoneNumberPage.dart';
 import 'package:flutter_application_socail_media/Pages/login-register/SignInPage.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,10 +21,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.light(),
+      // theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
-      home: SocialApp(),
+      home: const SocialApp(),
     );
+  }
+}
+
+RxBool isDark = false.obs;
+
+class SocialApp extends StatelessWidget {
+  const SocialApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const BottomNavigation();
   }
 }
 
@@ -33,7 +48,7 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   final PersistentTabController _controller = PersistentTabController(
-    initialIndex: 0,
+    initialIndex: 0, // 📲 Start page (Home)
   );
 
   @override
@@ -44,115 +59,115 @@ class _BottomNavigationState extends State<BottomNavigation> {
         PersistentTabConfig(
           screen: HomeScreen(),
           item: ItemConfig(
-            icon: Icon(PhosphorIconsRegular.house, size: 28.0),
-            // title: "Home",
+            icon: Badge(child: const Icon(PhosphorIconsFill.house, size: 28.0)),
+            title: "Home",
             activeForegroundColor: Colors.indigoAccent,
+            inactiveIcon: Badge(
+              child: const Icon(PhosphorIconsRegular.house, size: 28.0),
+            ),
           ),
         ),
         PersistentTabConfig(
-          screen: Text('Page Reel'),
+          screen: ReelScreen(),
           item: ItemConfig(
-            icon: Icon(PhosphorIconsRegular.video, size: 28.0),
-            // title: "Reel",
+            icon: const Icon(PhosphorIconsFill.video, size: 28.0),
+            title: "Reel",
             activeForegroundColor: Colors.indigoAccent,
+            inactiveIcon: const Icon(PhosphorIconsRegular.video, size: 28.0),
           ),
         ),
         PersistentTabConfig.noScreen(
           item: ItemConfig(
-            icon: const Icon(PhosphorIconsRegular.plus, size: 20.0, color: Colors.white,),
+            icon: const Icon(
+              PhosphorIconsRegular.plus,
+              size: 20.0,
+              color: Colors.white,
+            ),
             // title: "Post",
             activeForegroundColor: Colors.indigoAccent,
             // inactiveForegroundColor: Colors.grey,
           ),
           onPressed: (context) {
+            // isDark.value = !isDark.value;
+            // print(isDark.value);
             // setState(() {
             //   _hideTab = !_hideTab;
             // });
           },
         ),
         PersistentTabConfig(
-          screen: Text('Page Messages'),
+          screen: ChatScreen(),
           item: ItemConfig(
             icon: Badge(
-              child: Icon(PhosphorIconsRegular.chatsCircle, size: 28.0),
+              label: Text("10"),
+              padding: EdgeInsets.all(2),
+              child: const Icon(PhosphorIconsFill.chatsCircle, size: 28.0),
             ),
-            // title: "Messages",
+            title: "Messages",
             activeForegroundColor: Colors.indigoAccent,
+            inactiveIcon: Badge(
+              label: Text("10"),
+              padding: EdgeInsets.all(2),
+              child: const Icon(PhosphorIconsRegular.chatsCircle, size: 28.0),
+            ),
           ),
         ),
         PersistentTabConfig(
-          screen: Text('Page Users'),
-          navigatorConfig: NavigatorConfig(),
-          scrollController: ScrollController(),
+          screen: ProfileScreen(),
           item: ItemConfig(
-            icon: Icon(PhosphorIconsRegular.user, size: 28.0),
-            // title: "Users",
+            icon: const Icon(PhosphorIconsFill.user, size: 28.0),
+            title: "Profile",
             activeForegroundColor: Colors.indigoAccent,
+            inactiveIcon: const Icon(PhosphorIconsRegular.user, size: 28.0),
           ),
         ),
       ],
+      onTabChanged:
+          (value) => value == 1 ? isDark.value = true : isDark.value = false,
       navBarBuilder:
           (navBarConfig) => // CustomNavBar(
-            Style15BottomNavBar(
-            navBarConfig: navBarConfig,
-            navBarDecoration: NavBarDecoration(
-              color: Colors.white,
-              // borderRadius: BorderRadius.circular(8),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color.fromARGB(66, 187, 187, 187),
-                  blurRadius: 10,
-                ),
-              ],
-            ),
-            // itemAnimationProperties: ItemAnimation(
-            //   duration: const Duration(milliseconds: 400),
-            //   curve: Curves.easeInOut,
-            // ),
+              Obx(
+            () =>
+                isDark.value
+                    ? Style15BottomNavBar(
+                      navBarConfig: navBarConfig,
+                      navBarDecoration: const NavBarDecoration(
+                        color: Color.fromRGBO(0, 0, 0, 0.94),
+                        // borderRadius: BorderRadius.circular(8),
+                        border: Border(
+                          top: BorderSide(
+                            color: Color.fromARGB(255, 62, 62, 62),
+                            width: 0.5,
+                          ),
+                        ),
+                        // boxShadow: [
+                        //   BoxShadow(
+                        //     color: Color.fromARGB(66, 187, 187, 187),
+                        //     blurRadius: 10,
+                        //   ),
+                        // ],
+                      ),
+                    )
+                    : Style15BottomNavBar(
+                      navBarConfig: navBarConfig,
+                      navBarDecoration: const NavBarDecoration(
+                        color: Colors.white,
+                        // borderRadius: BorderRadius.circular(8),
+                        border: Border(
+                          top: BorderSide(
+                            color: Color.fromARGB(255, 219, 219, 219),
+                            width: 0.5,
+                          ),
+                        ),
+                        // boxShadow: [
+                        //   BoxShadow(
+                        //     color: Colors.white,
+                        //     // blurRadius: 10,
+                        //   ),
+                        // ],
+                      ),
+                    ),
           ),
-    );
-  }
-}
-
-class SocialApp extends StatelessWidget {
-  const SocialApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/social_icon.png', // ไอคอนแอป
-              width: 24,
-              height: 24,
-            ),
-            const SizedBox(width: 8),
-            const Text(
-              'Commune',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(PhosphorIconsRegular.magnifyingGlass, size: 24.0),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(PhosphorIconsRegular.bellSimple, size: 24.0),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: BottomNavigation(),
     );
   }
 }
