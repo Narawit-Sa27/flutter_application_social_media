@@ -145,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        backgroundColor: Colors.indigoAccent[50],
+        backgroundColor: Colors.grey[100],
         body:
             _isFirstLoad
                 ? const Center(

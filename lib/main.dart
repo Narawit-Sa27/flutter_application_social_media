@@ -88,11 +88,32 @@ class _BottomNavigationState extends State<BottomNavigation> {
             // inactiveForegroundColor: Colors.grey,
           ),
           onPressed: (context) {
-            // isDark.value = !isDark.value;
-            // print(isDark.value);
-            // setState(() {
-            //   _hideTab = !_hideTab;
-            // });
+            showModalBottomSheet(
+              context: context,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              builder: (BuildContext context) {
+                return Container(
+                  padding: const EdgeInsets.all(16),
+                  height: 200,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'เลือกตัวเลือก',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      ListTile(title: Text('ตัวเลือกที่ 1')),
+                      ListTile(title: Text('ตัวเลือกที่ 2')),
+                    ],
+                  ),
+                );
+              },
+            );
           },
         ),
         PersistentTabConfig(
