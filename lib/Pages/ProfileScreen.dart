@@ -2,17 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  final VoidCallback onPressed;
+
+  const ProfileScreen({super.key, required this.onPressed});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _controller;
+  int _selectedIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(length: 4, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: ThemeData.light(),
+      data: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.indigoAccent,
+          brightness: Brightness.light,
+        ),
+      ),
       child: DefaultTabController(
         length: 4,
         child: Scaffold(
@@ -62,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   size: 24,
                 ),
                 onPressed: () {
-                  
+                  widget.onPressed();
                 },
               ),
             ],
@@ -77,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(
                     height: 70,
                     width: 70,
-                    child: const CircleAvatar(
+                    child: CircleAvatar(
                       radius: 25,
                       backgroundImage: NetworkImage(
                         'https://media.istockphoto.com/id/2157394121/photo/portrait-of-confident-businesswoman-standing-in-office.webp?a=1&b=1&s=612x612&w=0&k=20&c=eK6hSqdHlfABi60Ipge_SkS1NsHGNf8Lnm0WSrZFGgA=',
@@ -103,13 +125,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(
                     height: 30,
                     width: 1,
-                    child: ColoredBox(color: Colors.grey),
+                    child: ColoredBox(key: Key("1"), color: Colors.grey),
                   ),
                   ProfileStat(title: "Followers", value: "40.5K"),
                   SizedBox(
                     height: 30,
                     width: 1,
-                    child: ColoredBox(color: Colors.grey),
+                    child: ColoredBox(key: Key("2"), color: Colors.grey),
                   ),
                   ProfileStat(title: "Likes", value: "20K"),
                 ],
@@ -125,13 +147,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: FilledButton(
                       onPressed: () {},
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.grey[200],
+                        backgroundColor: Colors.indigoAccent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
                       child: Text(
                         "Edit profile",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -144,9 +169,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onPressed: () {},
                       style: TextButton.styleFrom(
                         backgroundColor: Colors.grey[200],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
                       child: Text(
-                        "Edit profile",
+                        "Share profile",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black87,
@@ -157,10 +185,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
               const SizedBox(height: 14),
-              const TabBar(
+              TabBar(
+                controller: _controller,
                 labelColor: Colors.indigoAccent,
                 unselectedLabelColor: Colors.grey,
-                tabs: [
+                indicatorColor: Colors.indigoAccent,
+                tabs: const [
                   Tab(icon: Icon(PhosphorIconsRegular.squaresFour, size: 24.0)),
                   Tab(icon: Icon(PhosphorIconsRegular.heart, size: 24.0)),
                   Tab(icon: Icon(PhosphorIconsRegular.video, size: 24.0)),
@@ -168,6 +198,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     icon: Icon(PhosphorIconsRegular.bookmarkSimple, size: 24.0),
                   ),
                 ],
+              ),
+              Expanded(
+                child: TabBarView(
+                  controller: _controller,
+                  children: <Widget>[
+                    Icon(Icons.flight, size: 150),
+                    Icon(Icons.directions_car, size: 150),
+                    TabScreenVideo(),
+                    Icon(Icons.directions_boat, size: 150),
+                  ],
+                ),
               ),
             ],
           ),
@@ -194,5 +235,45 @@ class ProfileStat extends StatelessWidget {
         Text(title, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
       ],
     );
+  }
+}
+
+class TabScreenVideo extends StatelessWidget {
+  const TabScreenVideo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      primary: false,
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+      crossAxisSpacing: 2,
+      mainAxisSpacing: 2,
+      crossAxisCount: 3,
+      childAspectRatio: 0.75,
+      children: <Widget>[
+        _buildBoxVideo(),
+        _buildBoxVideo(),
+        _buildBoxVideo(),
+        _buildBoxVideo(),
+        _buildBoxVideo(),
+        _buildBoxVideo(),
+        _buildBoxVideo(),
+        _buildBoxVideo(),
+      ],
+    );
+  }
+
+  Widget _buildBoxVideo(
+    // Widget widget
+  ) {
+    return Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.teal[100],
+          ),
+          padding: const EdgeInsets.all(8),
+          child: const Text("He'd have you all unravel at the"),
+        );
   }
 }

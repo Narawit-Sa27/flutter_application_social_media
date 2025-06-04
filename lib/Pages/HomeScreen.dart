@@ -6,6 +6,7 @@ import 'package:flutter_application_socail_media/Services/Post.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:dotted_border/dotted_border.dart';
+import 'package:badges/badges.dart' as badges;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -104,7 +105,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: ThemeData.light(),
+      data: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.indigoAccent,
+          brightness: Brightness.light,
+        ),
+      ),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -231,14 +237,42 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ],
                                           )
                                           : Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
-                                              SizedBox(
-                                                height: 70,
-                                                width: 70,
-                                                child: const CircleAvatar(
-                                                  radius: 25,
-                                                  backgroundImage: NetworkImage(
-                                                    'https://media.istockphoto.com/id/2157394121/photo/portrait-of-confident-businesswoman-standing-in-office.webp?a=1&b=1&s=612x612&w=0&k=20&c=eK6hSqdHlfABi60Ipge_SkS1NsHGNf8Lnm0WSrZFGgA=',
+                                              badges.Badge(
+                                                badgeStyle: badges.BadgeStyle(
+                                                  shape:
+                                                      badges.BadgeShape.circle,
+                                                  badgeColor: Colors.green,
+                                                  borderSide: BorderSide(
+                                                    color: Colors.white,
+                                                    width: 2,
+                                                  ),
+                                                  padding: EdgeInsets.all(8),
+                                                ),
+                                                position: badges
+                                                    .BadgePosition.bottomEnd(
+                                                  bottom: 5,
+                                                  end: 5,
+                                                ),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color:
+                                                          Colors.indigoAccent,
+                                                      width: 2,
+                                                    ),
+                                                  ),
+                                                  padding: EdgeInsets.all(2),
+                                                  height: 70,
+                                                  width: 70,
+                                                  child: const CircleAvatar(
+                                                    radius: 25,
+                                                    backgroundImage: NetworkImage(
+                                                      'https://media.istockphoto.com/id/2157394121/photo/portrait-of-confident-businesswoman-standing-in-office.webp?a=1&b=1&s=612x612&w=0&k=20&c=eK6hSqdHlfABi60Ipge_SkS1NsHGNf8Lnm0WSrZFGgA=',
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -363,111 +397,165 @@ class SocialPostCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // User Info Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundImage: NetworkImage(
-                          userProfile,
-                        ), // User profile
-                      ),
-                      const SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            userName,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero, // delete padding
+                shape: const RoundedRectangleBorder(), // style shape button
+                tapTargetSize:
+                    MaterialTapTargetSize.shrinkWrap, // reduce hit area
+                elevation: 0, // shadow
+                backgroundColor:
+                    Colors.transparent, // If you don't want a button background
+                foregroundColor: Colors.grey,
+                surfaceTintColor: Colors.grey,
+                // overlayColor: Colors.white,
+                shadowColor: Colors.transparent,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero, // delete padding
+                            shape: const CircleBorder(), // style shape button
+                            tapTargetSize:
+                                MaterialTapTargetSize
+                                    .shrinkWrap, // reduce hit area
+                            elevation: 0, // shadow
+                            backgroundColor:
+                                Colors
+                                    .transparent, // If you don't want a button background
+                            shadowColor: Colors.grey[50],
                           ),
-
-                          Text(
-                            '$userHandle • $timeAgo',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12,
-                            ),
+                          child: CircleAvatar(
+                            radius: 20,
+                            backgroundImage: NetworkImage(userProfile),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
 
-                  // More Options (...)
-                  PopupMenuButton<String>(
-                    borderRadius: BorderRadius.circular(24),
-                    padding: EdgeInsets.zero,
-                    color: Colors.white,
-                    onSelected: (value) {
-                      // handle action
-                    },
-                    itemBuilder:
-                        (context) =>
-                            options.asMap().entries.map((entry) {
-                              int index = entry.key;
-                              String value = entry.value;
-                              return PopupMenuItem<String>(
-                                padding: EdgeInsets.all(0),
-                                value: value,
-                                child: PopupMenuItem(
-                                  value: value,
-                                  child: Column(
-                                    children: [
-                                      if (index == 3 ||
-                                          index ==
-                                              5) // create line in menu on interesting & report
-                                        const Divider(
-                                          height: 0.5,
-                                          color: Colors.grey,
-                                        ),
-                                      // Expanded(
-                                      // child:
-                                      Align(
-                                        alignment: Alignment.center,
-                                        heightFactor: 1.9,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          spacing: 6,
-                                          children: [
-                                            Icon(
-                                              icons[index],
-                                              color:
-                                                  index == 5
-                                                      ? Colors.red
-                                                      : Colors.grey[700],
-                                            ),
-                                            Text(
-                                              value,
-                                              style: TextStyle(
-                                                color: Colors.grey[700],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        // ),
-                                      ),
-                                    ],
-                                  ),
+                        const SizedBox(width: 2),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextButton(
+                              onPressed: () {},
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                minimumSize: Size.zero, // ไม่บังคับขนาดขั้นต่ำ
+                                tapTargetSize:
+                                    MaterialTapTargetSize
+                                        .shrinkWrap, // ไม่ขยาย hitbox เกินตัวอักษร
+                                shape: const RoundedRectangleBorder(),
+                                foregroundColor: Colors.grey,
+                                surfaceTintColor: Colors.grey,
+                                shadowColor: Colors.transparent,
+                              ),
+                              child: Text(
+                                userName,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.black87,
                                 ),
-                              );
-                            }).toList(),
-                    icon: Icon(
-                      PhosphorIconsRegular.dotsThreeOutline,
-                      color: Colors.grey[700],
-                      size: 24,
+                              ),
+                            ),
+
+                            Text(
+                              '$userHandle • $timeAgo',
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+
+                    // More Options (...)
+                    PopupMenuButton<String>(
+                      borderRadius: BorderRadius.circular(24),
+                      padding: EdgeInsets.zero,
+                      color: Colors.white,
+                      onSelected: (value) {
+                        // handle action
+                      },
+                      itemBuilder:
+                          (context) =>
+                              options.asMap().entries.map((entry) {
+                                int index = entry.key;
+                                String value = entry.value;
+                                return PopupMenuItem<String>(
+                                  padding: EdgeInsets.all(0),
+                                  value: value,
+                                  child: PopupMenuItem(
+                                    value: value,
+                                    child: Column(
+                                      children: [
+                                        if (index == 3 ||
+                                            index ==
+                                                5) // create line in menu on interesting & report
+                                          const Divider(
+                                            height: 0.5,
+                                            color: Color.fromARGB(
+                                              255,
+                                              213,
+                                              213,
+                                              213,
+                                            ),
+                                          ),
+                                        // Expanded(
+                                        // child:
+                                        Align(
+                                          alignment: Alignment.center,
+                                          heightFactor: 1.9,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            spacing: 6,
+                                            children: [
+                                              Icon(
+                                                icons[index],
+                                                color:
+                                                    index == 5
+                                                        ? Colors.red
+                                                        : Colors.grey[700],
+                                              ),
+                                              Text(
+                                                value,
+                                                style: TextStyle(
+                                                  color:
+                                                      index == 5
+                                                          ? Colors.red
+                                                          : Colors.grey[700],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          // ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                      icon: Icon(
+                        PhosphorIconsRegular.dotsThreeOutline,
+                        color: Colors.grey[700],
+                        size: 24,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 6),
@@ -475,8 +563,25 @@ class SocialPostCard extends StatelessWidget {
             // Post Text
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Text(postText, style: const TextStyle(fontSize: 15)),
+              child: ElevatedButton(
+                onPressed: () {},
+                style: TextButton.styleFrom(
+                  shape: const RoundedRectangleBorder(),
+                  padding: EdgeInsets.zero,
+                  minimumSize: Size.zero,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  backgroundColor: Colors.transparent,
+                  foregroundColor: Colors.grey,
+                  surfaceTintColor: Colors.grey,
+                  shadowColor: Colors.transparent,
+                ),
+                child: Text(
+                  postText,
+                  style: const TextStyle(fontSize: 15, color: Colors.black87),
+                ),
+              ),
             ),
+
             if (imageUrl != null) ...[
               const SizedBox(height: 10),
               ClipRRect(

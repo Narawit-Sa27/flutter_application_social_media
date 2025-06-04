@@ -3,6 +3,7 @@ import 'package:flutter_application_socail_media/Pages/ChatScreen.dart';
 import 'package:flutter_application_socail_media/Pages/HomeScreen.dart';
 import 'package:flutter_application_socail_media/Pages/ProfileScreen.dart';
 import 'package:flutter_application_socail_media/Pages/ReelScreen.dart';
+import 'package:flutter_application_socail_media/Pages/SettingPage.dart';
 import 'package:flutter_application_socail_media/Pages/login-register/ChangePasswordPage.dart';
 import 'package:flutter_application_socail_media/Pages/login-register/OTPCodePage.dart';
 import 'package:flutter_application_socail_media/Pages/login-register/PhoneNumberPage.dart';
@@ -65,6 +66,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             inactiveIcon: Badge(
               child: const Icon(PhosphorIconsRegular.house, size: 28.0),
             ),
+            inactiveForegroundColor: Color(0xFF757575),
           ),
         ),
         PersistentTabConfig(
@@ -74,6 +76,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             title: "Reel",
             activeForegroundColor: Colors.indigoAccent,
             inactiveIcon: const Icon(PhosphorIconsRegular.video, size: 28.0),
+            inactiveForegroundColor: Color(0xFF757575),
           ),
         ),
         PersistentTabConfig.noScreen(
@@ -87,34 +90,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             activeForegroundColor: Colors.indigoAccent,
             // inactiveForegroundColor: Colors.grey,
           ),
-          onPressed: (context) {
-            showModalBottomSheet(
-              context: context,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-              ),
-              builder: (BuildContext context) {
-                return Container(
-                  padding: const EdgeInsets.all(16),
-                  height: 200,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        'เลือกตัวเลือก',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      ListTile(title: Text('ตัวเลือกที่ 1')),
-                      ListTile(title: Text('ตัวเลือกที่ 2')),
-                    ],
-                  ),
-                );
-              },
-            );
-          },
+          onPressed: (context) {},
         ),
         PersistentTabConfig(
           screen: ChatScreen(),
@@ -131,15 +107,67 @@ class _BottomNavigationState extends State<BottomNavigation> {
               padding: EdgeInsets.all(2),
               child: const Icon(PhosphorIconsRegular.chatsCircle, size: 28.0),
             ),
+            inactiveForegroundColor: Color(0xFF757575),
           ),
         ),
         PersistentTabConfig(
-          screen: ProfileScreen(),
+          screen: ProfileScreen(
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                ),
+                builder: (BuildContext context) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    height: 200,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildModalList(
+                          const Icon(PhosphorIconsRegular.gear, size: 28.0),
+                          "Settings and privacy",
+                          () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) {
+                                  return SettingPage();
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                        _buildModalList(
+                          const Icon(
+                            PhosphorIconsRegular.clockCounterClockwise,
+                            size: 28.0,
+                          ),
+                          "History",
+                          () {},
+                        ),
+                        _buildModalList(
+                          const Icon(
+                            PhosphorIconsRegular.creditCard,
+                            size: 28.0,
+                          ),
+                          "Ordering and Payment",
+                          () {},
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          ),
           item: ItemConfig(
             icon: const Icon(PhosphorIconsFill.user, size: 28.0),
             title: "Profile",
             activeForegroundColor: Colors.indigoAccent,
             inactiveIcon: const Icon(PhosphorIconsRegular.user, size: 28.0),
+            inactiveForegroundColor: Color(0xFF757575),
           ),
         ),
       ],
@@ -190,5 +218,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
                     ),
           ),
     );
+  }
+
+  Widget _buildModalList(Icon iconWidget, String text, VoidCallback onPressed) {
+    return ListTile(leading: iconWidget, title: Text(text), onTap: onPressed);
   }
 }

@@ -35,7 +35,12 @@ class _ReelScreenState extends State<ReelScreen> {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: ThemeData.dark(),
+      data: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.indigoAccent,
+          brightness: Brightness.dark,
+        ),
+      ),
       child: Scaffold(
         body: SafeArea(
           child: PageView.builder(

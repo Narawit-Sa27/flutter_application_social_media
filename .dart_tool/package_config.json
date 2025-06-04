@@ -14,6 +14,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "badges",
+      "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/badges-3.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "boolean_selector",
       "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/boolean_selector-2.1.2",
       "packageUri": "lib/",
@@ -398,7 +404,7 @@
       "languageVersion": "3.7"
     }
   ],
-  "generated": "2025-06-03T11:01:30.159321Z",
+  "generated": "2025-06-04T10:39:29.638316Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///C:/Users/Windows11/Desktop/Flutter/flutter",

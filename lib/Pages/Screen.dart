@@ -84,3 +84,23 @@
 //       );
 //   }
 // }
+
+
+// import 'package:flutter/material.dart';
+
+// class Setting extends StatelessWidget {
+//   const Setting({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Theme(
+//       data: ThemeData(
+//         colorScheme: ColorScheme.fromSeed(
+//           seedColor: Colors.indigoAccent,
+//           brightness: Brightness.light,
+//         ),
+//       ),
+//       child: Scaffold(),
+//     );
+//   }
+// }
