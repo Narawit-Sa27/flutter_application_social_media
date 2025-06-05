@@ -70,7 +70,48 @@ class _BottomNavigationState extends State<BottomNavigation> {
           ),
         ),
         PersistentTabConfig(
-          screen: ReelScreen(),
+          screen: ReelScreen(
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                ),
+                builder: (BuildContext context) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    height: 200,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildModalList(
+                          const Icon(PhosphorIconsRegular.bookmarkSimple, size: 28.0),
+                          "Add to Bookmarks",
+                          () {},
+                        ),
+                        _buildModalList(
+                          const Icon(
+                            PhosphorIconsRegular.copySimple,
+                            size: 28.0,
+                          ),
+                          "Copy link",
+                          () {},
+                        ),
+                        // _buildModalList(
+                        //   const Icon(
+                        //     PhosphorIconsRegular.creditCard,
+                        //     size: 28.0,
+                        //   ),
+                        //   "Ordering and Payment",
+                        //   () {},
+                        // ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          ),
           item: ItemConfig(
             icon: const Icon(PhosphorIconsFill.video, size: 28.0),
             title: "Reel",

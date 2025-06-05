@@ -245,7 +245,7 @@ class TabScreenVideo extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.count(
       primary: false,
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+      padding: const EdgeInsets.all(10),
       crossAxisSpacing: 2,
       mainAxisSpacing: 2,
       crossAxisCount: 3,
