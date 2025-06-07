@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -147,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     child: FilledButton(
                       onPressed: () {},
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.indigoAccent,
+                        backgroundColor: Colors.indigo.shade600,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -267,13 +268,13 @@ class TabScreenVideo extends StatelessWidget {
     // Widget widget
   ) {
     return Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(12),
-            color: Colors.teal[100],
-          ),
-          padding: const EdgeInsets.all(8),
-          child: const Text("He'd have you all unravel at the"),
-        );
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.teal[100],
+      ),
+      padding: const EdgeInsets.all(8),
+      child: const Text("He'd have you all unravel at the"),
+    );
   }
 }

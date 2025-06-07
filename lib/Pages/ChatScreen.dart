@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:badges/badges.dart' as badges;
@@ -236,7 +237,7 @@ class _ChatScreenState extends State<ChatScreen>
                   indicatorSize: TabBarIndicatorSize.tab,
                   indicator: BoxDecoration(
                     borderRadius: BorderRadius.circular(12), // Creates border
-                    color: Colors.indigoAccent,
+                    color: Colors.indigo.shade600,
                   ), //Change background color from here
                   splashBorderRadius: BorderRadius.circular(12),
                   tabs: const [Tab(text: 'Messages'), Tab(text: 'Requests')],

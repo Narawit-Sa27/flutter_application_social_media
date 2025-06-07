@@ -3,6 +3,7 @@ import 'package:chewie/chewie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:video_player/video_player.dart';
 import 'package:get/get.dart';
+import 'package:flutter/services.dart';
 
 class ReelScreen extends StatefulWidget {
   final VoidCallback onPressed;
@@ -31,22 +32,43 @@ class _ReelScreenState extends State<ReelScreen> {
     setState(() {
       data = videos;
     });
-    preloadController(0);
-    preloadController(1);
+
+    // preload ก่อน render เสร็จ
+    await preloadController(0);
+    await preloadController(1);
+
+    // await UI before create success then play video
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      data[0].videoController?.play();
+    });
   }
 
   void onScroll() {
     final page = _pageController.page?.round() ?? 0;
     if (page != currentPage) {
-      disposeController(currentPage - 1); // unload ก่อนหน้า
-      preloadController(page); // โหลดปัจจุบัน
-      preloadController(page + 1); // โหลดถัดไป
+      disposeController(currentPage - 1);
+      preloadController(page);
+      preloadController(page + 1);
+
+      // ✅ สั่งเล่นซ้ำเพื่อความชัวร์
+      final controller = data[page].videoController;
+      if (controller != null && controller.value.isInitialized) {
+        controller.play();
+      }
+
       currentPage = page;
     }
   }
 
   Future<List<VideoItem>> fetchMockVideos() async {
     return [
+      VideoItem(
+        name: "Bob",
+        imageUrl:
+            "https://images.pexels.com/photos/1040881/pexels-photo-1040881.jpeg?auto=compress&cs=tinysrgb&w=600",
+        videoUrl:
+            "https://www.youtube.com/shorts/d03tVq64Bcw?feature=share",
+      ),
       VideoItem(
         name: "Bob",
         imageUrl:
@@ -75,18 +97,20 @@ class _ReelScreenState extends State<ReelScreen> {
   Future<void> preloadController(int index) async {
     if (index < 0 || index >= data.length) return;
     final item = data[index];
-    if (item.videoController != null) return;
+
+    if (item.videoController != null) return; // ✅ ป้องกัน preload ซ้ำ
 
     final controller = VideoPlayerController.network(item.videoUrl);
     await controller.initialize();
     controller.setLooping(true);
-    await controller.play(); // ✅ สำคัญมาก โดยเฉพาะ Android/iOS
+    await controller.play(); // ✅ สำคัญ
 
     final chewie = ChewieController(
       videoPlayerController: controller,
       autoPlay: true,
       looping: true,
-      showControls: false,
+      showControls: true,
+      customControls: CustomControls(),
     );
 
     setState(() {
@@ -116,34 +140,41 @@ class _ReelScreenState extends State<ReelScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.indigoAccent,
-          brightness: Brightness.dark,
-        ),
+    // Change style color status Bar
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Color.fromRGBO(
+          0,
+          0,
+          0,
+          0.94,
+        ), // Background color Status Bar
+        statusBarIconBrightness: Brightness.light, // icon or text color
+        statusBarBrightness: Brightness.dark, // for iOS color
       ),
-      child: Scaffold(
-        body: SafeArea(
-          child: PageView.builder(
+      child: Theme(
+        data: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.indigoAccent,
+            // brightness: Brightness.dark,
+          ),
+        ),
+        child: Scaffold(
+          backgroundColor: const Color.fromRGBO(0, 0, 0, 0.94),
+          body: PageView.builder(
             controller: _pageController,
             scrollDirection: Axis.vertical,
             itemCount: data.length,
             itemBuilder: (context, index) {
               final item = data[index];
               if (item.chewieController != null &&
-    item.videoController?.value.isInitialized == true) {
+                  item.videoController?.value.isInitialized == true) {
                 return Stack(
                   key: PageStorageKey(item),
                   children: [
                     Chewie(
-                      controller: ChewieController(
-                        videoPlayerController: item.videoController!,
-                        // autoPlay: false,
-                        // looping: true,
-                        customControls:
-                            CustomControls(), // 👈 ใส่ custom controls ที่คุณสร้าง
-                      ),
+                      controller:
+                          item.chewieController!, // ✅ ใช้ที่ preload มาแล้ว
                     ),
                     Positioned(
                       left: 16,
@@ -345,7 +376,7 @@ class _CustomControlsState extends State<CustomControls> {
             Align(
               alignment: Alignment.center,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   IconButton(
                     iconSize: 36,

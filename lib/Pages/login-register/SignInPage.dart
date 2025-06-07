@@ -41,31 +41,32 @@ class _SignInPageState extends State<SignInPage> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    _formKey.currentState?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context, viewportConstraints) {
+      builder: (context, constraints) {
         return Scaffold(
+          appBar: AppBar(backgroundColor: Colors.white),
           backgroundColor: const Color(0xFFFFFFFF),
           body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Center(
-                child: SingleChildScrollView(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: viewportConstraints.maxHeight,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // ==== 👉 Top content ====
-                        Column(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+                            // ==== 👉 Top content ====
                             const SizedBox(height: 50),
                             const Text(
                               'Sign In Now',
@@ -148,47 +149,44 @@ class _SignInPageState extends State<SignInPage> {
                             ),
                           ],
                         ),
+                      ),
+                    ),
+                  ),
 
-                        // ==== 👉 Bottom content ====
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  "Don't have an account?",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xFF757575),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder:
-                                            (context) => const SignUpPage(),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text(
-                                    'Create Now',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.indigo,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                  // ==== 👉 Bottom content ====
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Don't have an account?",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF757575),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SignUpPage(),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            'Create Now',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.indigoAccent,
                             ),
-                            const SizedBox(height: 36),
-                          ],
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ),
+                ],
               ),
             ),
           ),

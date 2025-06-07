@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_socail_media/Pages/login-register/ChangePasswordPage.dart';
+import 'package:flutter_application_socail_media/Pages/login-register/SignInPage.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class SettingPage extends StatelessWidget {
@@ -35,7 +37,16 @@ class SettingPage extends StatelessWidget {
               Icon(PhosphorIconsRegular.key),
               "Password Manage",
               Icon(PhosphorIconsRegular.caretRight),
-              () {},
+              () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) {
+                      return ChangePassPage();
+                    },
+                  ),
+                );
+              },
             ),
             _buildListSetting(
               Icon(PhosphorIconsRegular.info),
@@ -59,7 +70,14 @@ class SettingPage extends StatelessWidget {
               Icon(PhosphorIconsRegular.signOut),
               "Log out",
               Icon(PhosphorIconsRegular.caretRight),
-              () {},
+              () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignInPage()),
+                  (Route<dynamic> route) =>
+                      false, // Delete all previous pages from stack
+                );
+              },
             ),
           ],
         ),

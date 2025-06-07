@@ -4,7 +4,8 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:get/get.dart';
 import 'package:flutter_application_socail_media/Services/Post.dart';
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart'
+    show SystemChrome, SystemUiOverlayStyle, rootBundle;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:badges/badges.dart' as badges;
 

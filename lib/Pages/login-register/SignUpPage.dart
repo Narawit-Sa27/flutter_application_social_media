@@ -51,25 +51,25 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context, viewportConstraints) {
+      builder: (context, constraints) {
         return Scaffold(
+          appBar: AppBar(backgroundColor: Colors.white),
           backgroundColor: const Color(0xFFFFFFFF),
           body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Center(
-                child: SingleChildScrollView(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: viewportConstraints.maxHeight,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // ==== 👉 Top content ====
-                        Column(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+                            // ==== 👉 Top content ====
                             const SizedBox(height: 50),
                             const Text(
                               'Sign Up',
@@ -179,47 +179,45 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                           ],
                         ),
+                      ),
+                    ),
+                  ),
 
-                        // ==== 👉 Bottom content ====
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  "Already have an account?",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xFF757575),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    // Navigator.pushReplacement(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) => const SignInPage(),
-                                    //   ),
-                                    // );
-                                  },
-                                  child: const Text(
-                                    'Sign In',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.indigo,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                  // ==== 👉 Bottom content ====
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Already have an account?",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF757575),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            // Navigator.pushReplacement(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => const SignInPage(),
+                            //   ),
+                            // );
+                          },
+                          child: const Text(
+                            'Sign In',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.indigo,
                             ),
-                            const SizedBox(height: 36),
-                          ],
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ),
+                ],
               ),
             ),
           ),
