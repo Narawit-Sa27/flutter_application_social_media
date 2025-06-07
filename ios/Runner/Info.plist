@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>เราต้องการเข้าถึงคลังภาพเพื่อเลือกวิดีโอ</string>
+	<key>NSCameraUsageDescription</key>
+	<string>เราต้องการใช้กล้อง</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>เราต้องการใช้ไมโครโฟน</string>
 </dict>
 </plist>

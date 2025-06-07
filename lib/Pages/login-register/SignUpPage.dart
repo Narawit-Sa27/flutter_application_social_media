@@ -70,7 +70,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             // ==== 👉 Top content ====
-                            const SizedBox(height: 50),
+                            // const SizedBox(height: 50),
                             const Text(
                               'Sign Up',
                               style: TextStyle(

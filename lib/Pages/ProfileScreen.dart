@@ -1,6 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 class ProfileScreen extends StatefulWidget {
   final VoidCallback onPressed;
@@ -213,6 +218,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
             ],
           ),
+          floatingActionButton: const UploadReelButton(),
         ),
       ),
     );
@@ -244,37 +250,109 @@ class TabScreenVideo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      primary: false,
-      padding: const EdgeInsets.all(10),
-      crossAxisSpacing: 2,
-      mainAxisSpacing: 2,
-      crossAxisCount: 3,
-      childAspectRatio: 0.75,
-      children: <Widget>[
-        _buildBoxVideo(),
-        _buildBoxVideo(),
-        _buildBoxVideo(),
-        _buildBoxVideo(),
-        _buildBoxVideo(),
-        _buildBoxVideo(),
-        _buildBoxVideo(),
-        _buildBoxVideo(),
-      ],
+    return GridView.builder(
+      itemCount: 9,
+      padding: EdgeInsets.only(top: 5),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3, // จำนวนคอลัมน์
+        crossAxisSpacing: 2,
+        mainAxisSpacing: 3,
+        childAspectRatio: 9 / 16, // สัดส่วนวิดีโอแนวตั้ง
+      ),
+      itemBuilder: (context, index) {
+        return _buildBoxVideo();
+      },
     );
   }
 
   Widget _buildBoxVideo(
     // Widget widget
   ) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(12),
-        color: Colors.teal[100],
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.network(
+            "https://images.unsplash.com/photo-1748968218568-a5eac621e65c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8",
+            fit: BoxFit.cover,
+          ),
+          Positioned(
+            bottom: 8,
+            left: 8,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: Colors.black45,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Text("Reel", style: TextStyle(color: Colors.white)),
+            ),
+          ),
+        ],
       ),
-      padding: const EdgeInsets.all(8),
-      child: const Text("He'd have you all unravel at the"),
     );
   }
+}
+
+class UploadReelButton extends StatelessWidget {
+  const UploadReelButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () async {
+        try {
+          final file = await uploadReel(); // เรียกใช้ฟังก์ชันที่อัปโหลดวิดีโอและ thumbnail
+          print("👉 $file");
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text("Upload สำเร็จ")));
+        } catch (error) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text("Upload ไม่สำเร็จ")));
+        }
+      },
+      child: Icon(Icons.upload),
+      backgroundColor: Colors.pinkAccent,
+      tooltip: "อัปโหลดวิดีโอ Reel",
+    );
+  }
+}
+
+Future<XFile?> uploadReel() async {
+  final picker = ImagePicker();
+  final picked = await picker.pickVideo(source: ImageSource.gallery);
+
+  if (picked == null) return picked;
+
+  final videoFile = File(picked.path);
+  final videoId = DateTime.now().millisecondsSinceEpoch.toString();
+
+  // Upload video
+  final videoRef = FirebaseStorage.instance.ref('reels/videos/$videoId.mp4');
+  await videoRef.putFile(videoFile);
+  final videoUrl = await videoRef.getDownloadURL();
+
+  // Generate thumbnail
+  final thumbData = await VideoThumbnail.thumbnailData(
+    video: videoFile.path,
+    imageFormat: ImageFormat.JPEG,
+    quality: 75,
+  );
+
+  final thumbRef = FirebaseStorage.instance.ref(
+    'reels/thumbnails/$videoId.jpg',
+  );
+  await thumbRef.putData(thumbData!);
+  final thumbnailUrl = await thumbRef.getDownloadURL();
+
+  // Save to Firestore
+  await FirebaseFirestore.instance.collection('reels').add({
+    'videoUrl': videoUrl,
+    'thumbnailUrl': thumbnailUrl,
+    'createdAt': FieldValue.serverTimestamp(),
+    'userId': 'some-user-id',
+  });
 }

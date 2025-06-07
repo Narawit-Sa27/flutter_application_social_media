@@ -4,6 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:video_player/video_player.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class ReelScreen extends StatefulWidget {
   final VoidCallback onPressed;
@@ -67,7 +68,7 @@ class _ReelScreenState extends State<ReelScreen> {
         imageUrl:
             "https://images.pexels.com/photos/1040881/pexels-photo-1040881.jpeg?auto=compress&cs=tinysrgb&w=600",
         videoUrl:
-            "https://www.youtube.com/shorts/d03tVq64Bcw?feature=share",
+            "https://github.com/Narawit-Sa27/flutter_application_social_media/raw/refs/heads/main/assets/Download.mp4",
       ),
       VideoItem(
         name: "Bob",
@@ -161,128 +162,166 @@ class _ReelScreenState extends State<ReelScreen> {
         ),
         child: Scaffold(
           backgroundColor: const Color.fromRGBO(0, 0, 0, 0.94),
-          body: PageView.builder(
-            controller: _pageController,
-            scrollDirection: Axis.vertical,
-            itemCount: data.length,
-            itemBuilder: (context, index) {
-              final item = data[index];
-              if (item.chewieController != null &&
-                  item.videoController?.value.isInitialized == true) {
-                return Stack(
-                  key: PageStorageKey(item),
-                  children: [
-                    Chewie(
-                      controller:
-                          item.chewieController!, // ✅ ใช้ที่ preload มาแล้ว
-                    ),
-                    Positioned(
-                      left: 16,
-                      bottom: 90,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        spacing: 10,
-                        children: [
-                          CircleAvatar(
-                            radius: 16,
-                            backgroundImage: NetworkImage(
-                              item.imageUrl,
-                            ), // album cover
-                          ),
-                          Text(
-                            item.name,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      left: 16,
-                      bottom: 50,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          // Text('🔥 Nice shot!', style: TextStyle(color: Colors.white)),
-                          // Text('😂 LOL!', style: TextStyle(color: Colors.white)),
-                          Text(
-                            '💯 Fire bro!',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    Positioned(
-                      right: 16,
-                      bottom: 70,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        spacing: 15,
-                        children: [
-                          Obx(
-                            () => _buildActionIcon(
-                              activeHeart.value
-                                  ? Icon(
-                                    PhosphorIconsFill.heart,
-                                    color: Colors.red,
-                                  )
-                                  : Icon(
-                                    PhosphorIconsRegular.heart,
-                                    color: Colors.white,
-                                  ),
-                              "20.2K",
-                              () {
-                                activeHeart.toggle();
-                              },
-                            ),
-                          ),
-                          _buildActionIcon(
-                            Icon(
-                              PhosphorIconsRegular.chatCircleDots,
-                              color: Colors.white,
-                            ),
-                            "3,221",
-                            () {},
-                          ),
-                          _buildActionIcon(
-                            Icon(
-                              PhosphorIconsRegular.paperPlaneTilt,
-                              color: Colors.white,
-                            ),
-                            "13",
-                            () {},
-                          ),
-                          IconButton(
-                            style: TextButton.styleFrom(
-                              padding: EdgeInsets.zero,
-                              minimumSize: Size.zero,
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            onPressed: () {
-                              widget.onPressed();
-                            },
-                            icon: Icon(
-                              PhosphorIconsRegular.dotsThreeOutline,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    // PlayListSound(),
-                  ],
-                );
+          body: VisibilityDetector(
+            // 👈 check display screen
+            key: const Key("reel-screen"),
+            onVisibilityChanged: (info) {
+              if (info.visibleFraction == 0) {
+                // change screen home, message, ... pause video
+                for (var item in data) {
+                  if (item.chewieController != null &&
+                      item.videoController?.value.isInitialized == true) {
+                    item.videoController?.pause();
+                  }
+                }
               } else {
-                return Center(
-                  child: CircularProgressIndicator(color: Colors.indigoAccent),
-                );
+                // change screen reel video play. await UI before create success then play video
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  data[0].videoController?.play();
+                });
               }
             },
+            child: PageView.builder(
+              controller: _pageController,
+              scrollDirection: Axis.vertical,
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                final item = data[index];
+
+                if (item.chewieController != null &&
+                    item.videoController?.value.isInitialized == true) {
+                  final bool verticalVideo =
+                      item.videoController!.value.size.height >
+                      item.videoController!.value.size.width;
+                  return Stack(
+                    key: PageStorageKey(item),
+                    children: [
+                      verticalVideo
+                          ? SizedBox.expand(
+                            child: FittedBox(
+                              fit:
+                                  BoxFit
+                                      .cover, // สำคัญ: ทำให้วิดีโอเต็มพื้นที่ (อาจถูก crop)
+                              child: SizedBox(
+                                width: item.videoController!.value.size.width,
+                                height: item.videoController!.value.size.height,
+                                child: Chewie(
+                                  controller: item.chewieController!,
+                                ),
+                              ),
+                            ),
+                          )
+                          : Chewie(controller: item.chewieController!),
+                      Positioned(
+                        left: 16,
+                        bottom: 90,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          spacing: 10,
+                          children: [
+                            CircleAvatar(
+                              radius: 16,
+                              backgroundImage: NetworkImage(
+                                item.imageUrl,
+                              ), // album cover
+                            ),
+                            Text(
+                              item.name,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        left: 16,
+                        bottom: 50,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            // Text('🔥 Nice shot!', style: TextStyle(color: Colors.white)),
+                            // Text('😂 LOL!', style: TextStyle(color: Colors.white)),
+                            Text(
+                              '💯 Fire bro!',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      Positioned(
+                        right: 16,
+                        bottom: 70,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          spacing: 15,
+                          children: [
+                            Obx(
+                              () => _buildActionIcon(
+                                activeHeart.value
+                                    ? Icon(
+                                      PhosphorIconsFill.heart,
+                                      color: Colors.red,
+                                    )
+                                    : Icon(
+                                      PhosphorIconsRegular.heart,
+                                      color: Colors.white,
+                                    ),
+                                "20.2K",
+                                () {
+                                  activeHeart.toggle();
+                                },
+                              ),
+                            ),
+                            _buildActionIcon(
+                              Icon(
+                                PhosphorIconsRegular.chatCircleDots,
+                                color: Colors.white,
+                              ),
+                              "3,221",
+                              () {},
+                            ),
+                            _buildActionIcon(
+                              Icon(
+                                PhosphorIconsRegular.paperPlaneTilt,
+                                color: Colors.white,
+                              ),
+                              "13",
+                              () {},
+                            ),
+                            IconButton(
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                minimumSize: Size.zero,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              onPressed: () {
+                                widget.onPressed();
+                              },
+                              icon: Icon(
+                                PhosphorIconsRegular.dotsThreeOutline,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      PlayListSound(),
+                    ],
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.indigoAccent,
+                    ),
+                  );
+                }
+              },
+            ),
           ),
         ),
       ),
@@ -379,7 +418,7 @@ class _CustomControlsState extends State<CustomControls> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   IconButton(
-                    iconSize: 36,
+                    iconSize: 45,
                     color: Colors.white,
                     icon: Icon(Icons.replay_5),
                     onPressed: () {
@@ -388,7 +427,7 @@ class _CustomControlsState extends State<CustomControls> {
                     },
                   ),
                   IconButton(
-                    iconSize: 40,
+                    iconSize: 55,
                     color: Colors.white,
                     icon: Icon(
                       videoController.value.isPlaying
@@ -419,7 +458,7 @@ class _CustomControlsState extends State<CustomControls> {
                     },
                   ),
                   IconButton(
-                    iconSize: 36,
+                    iconSize: 45,
                     color: Colors.white,
                     icon: Icon(Icons.forward_5),
                     onPressed: () {
@@ -436,7 +475,7 @@ class _CustomControlsState extends State<CustomControls> {
             alignment: Alignment.bottomCenter,
             child: Container(
               decoration: BoxDecoration(shape: BoxShape.rectangle),
-              height: !_isPlaying ? 6 : 10,
+              height: !_isPlaying ? 7 : 10,
               child: VideoProgressIndicator(
                 videoController,
                 allowScrubbing: true,

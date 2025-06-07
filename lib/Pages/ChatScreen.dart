@@ -316,6 +316,16 @@ class _ChatScreenState extends State<ChatScreen>
   }
 
   Widget _buildPlaceholderTab() {
-    return const Center(child: Text("No requests"));
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        spacing: 10,
+        children: [
+          Icon(PhosphorIconsRegular.bellSlash, size: 64.0),
+          Text("No requests", style: TextStyle(fontSize: 24),),
+        ],
+      ),
+    );
   }
 }
