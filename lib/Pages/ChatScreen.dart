@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_socail_media/Pages/SearchBarChatPage.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:badges/badges.dart' as badges;
@@ -84,12 +85,22 @@ class _ChatScreenState extends State<ChatScreen>
           elevation: 0,
           title: Row(
             children: [
-              IconButton(
-                icon: const Icon(
-                  PhosphorIconsRegular.magnifyingGlass,
-                  size: 24.0,
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: "Search...",
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const SearchBar2()),
+                    );
+                  },
                 ),
-                onPressed: () {},
               ),
             ],
           ),
@@ -323,7 +334,7 @@ class _ChatScreenState extends State<ChatScreen>
         spacing: 10,
         children: [
           Icon(PhosphorIconsRegular.bellSlash, size: 64.0),
-          Text("No requests", style: TextStyle(fontSize: 24),),
+          Text("No requests", style: TextStyle(fontSize: 24)),
         ],
       ),
     );

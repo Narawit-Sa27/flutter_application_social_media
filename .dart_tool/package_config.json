@@ -32,12 +32,6 @@
       "languageVersion": "3.1"
     },
     {
-      "name": "carousel_slider",
-      "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/carousel_slider-5.0.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "characters",
       "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.4.0",
       "packageUri": "lib/",
@@ -84,6 +78,12 @@
       "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/cross_file-0.3.4+2",
       "packageUri": "lib/",
       "languageVersion": "3.3"
+    },
+    {
+      "name": "crypto",
+      "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.6",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
     },
     {
       "name": "csslib",
@@ -192,6 +192,12 @@
       "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_storage_web-3.10.13",
       "packageUri": "lib/",
       "languageVersion": "3.4"
+    },
+    {
+      "name": "fixnum",
+      "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/fixnum-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
     },
     {
       "name": "flutter",
@@ -440,6 +446,12 @@
       "languageVersion": "3.1"
     },
     {
+      "name": "sprintf",
+      "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/sprintf-7.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "stack_trace",
       "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/stack_trace-1.12.1",
       "packageUri": "lib/",
@@ -474,6 +486,12 @@
       "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.4.0",
       "packageUri": "lib/",
       "languageVersion": "3.5"
+    },
+    {
+      "name": "uuid",
+      "rootUri": "file:///C:/Users/Windows11/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-4.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "vector_math",
@@ -566,7 +584,7 @@
       "languageVersion": "3.7"
     }
   ],
-  "generated": "2025-06-07T17:09:49.765159Z",
+  "generated": "2025-06-08T06:52:46.036164Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///C:/Users/Windows11/Desktop/Flutter/flutter",

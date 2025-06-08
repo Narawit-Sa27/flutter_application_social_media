@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_socail_media/Pages/ChatScreen.dart';
+import 'package:flutter_application_socail_media/Pages/CommentReel.dart';
 import 'package:flutter_application_socail_media/Pages/HomeScreen.dart';
 import 'package:flutter_application_socail_media/Pages/ProfileScreen.dart';
 import 'package:flutter_application_socail_media/Pages/ReelScreen.dart';
@@ -71,7 +72,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
         ),
         PersistentTabConfig(
           screen: ReelScreen(
-            onPressed: () {
+            onPressed1: () {
               showModalBottomSheet(
                 context: context,
                 shape: const RoundedRectangleBorder(
@@ -85,7 +86,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _buildModalList(
-                          const Icon(PhosphorIconsRegular.bookmarkSimple, size: 28.0),
+                          const Icon(
+                            PhosphorIconsRegular.bookmarkSimple,
+                            size: 28.0,
+                          ),
                           "Add to Bookmarks",
                           () {},
                         ),
@@ -109,6 +113,16 @@ class _BottomNavigationState extends State<BottomNavigation> {
                     ),
                   );
                 },
+              );
+            },
+            onPressed2: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                ),
+                builder: (context) => CommentBottomSheet(),
               );
             },
           ),
@@ -265,4 +279,3 @@ class _BottomNavigationState extends State<BottomNavigation> {
     return ListTile(leading: iconWidget, title: Text(text), onTap: onPressed);
   }
 }
-

@@ -84,7 +84,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               hintText: widget.hintText,
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: 20, right: 10),
-                child: Icon(widget.prefixIcon),
+                child: Icon(widget.prefixIcon, size: 22,),
               ),
               suffixIcon:
                   widget.typePassword
@@ -95,6 +95,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                             visibilityOff
                                 ? PhosphorIconsBold.eyeSlash
                                 : PhosphorIconsBold.eye,
+                                size: 22,
                           ),
                           onPressed:
                               () => setState(

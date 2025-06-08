@@ -7,9 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class ReelScreen extends StatefulWidget {
-  final VoidCallback onPressed;
+  final VoidCallback onPressed1; // callback btn more icon
+  final VoidCallback onPressed2; // callback btn comment icon
 
-  const ReelScreen({super.key, required this.onPressed});
+  const ReelScreen({super.key, required this.onPressed1, required this.onPressed2});
 
   @override
   State<ReelScreen> createState() => _ReelScreenState();
@@ -110,8 +111,9 @@ class _ReelScreenState extends State<ReelScreen> {
       videoPlayerController: controller,
       autoPlay: true,
       looping: true,
-      showControls: true,
-      customControls: CustomControls(),
+      pauseOnBackgroundTap: true,
+      // showControls: false,
+      // customControls: CustomControls(),
     );
 
     setState(() {
@@ -283,7 +285,9 @@ class _ReelScreenState extends State<ReelScreen> {
                                 color: Colors.white,
                               ),
                               "3,221",
-                              () {},
+                              () {
+                                widget.onPressed2();
+                              },
                             ),
                             _buildActionIcon(
                               Icon(
@@ -300,7 +304,7 @@ class _ReelScreenState extends State<ReelScreen> {
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
                               onPressed: () {
-                                widget.onPressed();
+                                widget.onPressed1();
                               },
                               icon: Icon(
                                 PhosphorIconsRegular.dotsThreeOutline,

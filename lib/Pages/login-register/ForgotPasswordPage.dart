@@ -15,7 +15,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   final emailController = TextEditingController();
 
-  void _signIn() async {
+  void _sendData() async {
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(
         context,
@@ -107,7 +107,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                     height: 60,
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        _signIn();
+                                        _sendData();
                                       },
                                       // ==== 👆 Tap button function ====
                                       style: ElevatedButton.styleFrom(

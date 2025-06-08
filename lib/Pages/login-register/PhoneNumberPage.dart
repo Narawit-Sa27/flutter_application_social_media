@@ -18,14 +18,13 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
   // late bool _isSubmitted = false;
   RxBool _isSubmitted = false.obs;
 
-  void _signIn() async {
+  void _confirm() async {
     if (phoneNumberController.text.isNotEmpty &&
         _formKey.currentState!.validate()) {
       // ScaffoldMessenger.of(
       //   context,
       // ).showSnackBar(const SnackBar(content: Text('Processing Data')));
-      print('Form is valid!');
-      print('Full Phone Number: ${_formKey.currentState}');
+
     } else {
       // setState(() {
       _isSubmitted.value = true;
@@ -196,7 +195,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                                     height: 60,
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        _signIn();
+                                        _confirm();
                                       },
                                       // ==== 👆 Tap button function ====
                                       style: ElevatedButton.styleFrom(

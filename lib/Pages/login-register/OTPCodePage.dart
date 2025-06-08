@@ -17,7 +17,7 @@ class _OtpScreenState extends State<OtpScreen> {
     (_) => TextEditingController(),
   );
 
-  void _signIn() async {
+  void _vertify() async {
     bool allFilled = _controllers.every((c) => c.text.isNotEmpty);
     if (!allFilled) {
       otpErrorMessage.value = 'Please enter a 4-digit OTP.';
@@ -166,7 +166,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                     height: 60,
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        _signIn();
+                                        _vertify();
                                       },
                                       // ==== 👆 Tap button function ====
                                       style: ElevatedButton.styleFrom(

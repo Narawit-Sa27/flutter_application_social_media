@@ -303,8 +303,7 @@ class UploadReelButton extends StatelessWidget {
     return FloatingActionButton(
       onPressed: () async {
         try {
-          final file = await uploadReel(); // เรียกใช้ฟังก์ชันที่อัปโหลดวิดีโอและ thumbnail
-          print("👉 $file");
+          await uploadReel(); // เรียกใช้ฟังก์ชันที่อัปโหลดวิดีโอและ thumbnail
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text("Upload สำเร็จ")));
@@ -321,11 +320,11 @@ class UploadReelButton extends StatelessWidget {
   }
 }
 
-Future<XFile?> uploadReel() async {
+Future<void> uploadReel() async {
   final picker = ImagePicker();
   final picked = await picker.pickVideo(source: ImageSource.gallery);
 
-  if (picked == null) return picked;
+  if (picked == null) return;
 
   final videoFile = File(picked.path);
   final videoId = DateTime.now().millisecondsSinceEpoch.toString();

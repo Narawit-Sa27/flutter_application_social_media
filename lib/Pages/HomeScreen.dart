@@ -1,8 +1,10 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_socail_media/Pages/CommentPage.dart';
+import 'package:flutter_application_socail_media/Pages/SearchBarAllPage.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:get/get.dart';
-import 'package:flutter_application_socail_media/Services/Post.dart';
+import 'package:flutter_application_socail_media/Model/Post.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart'
     show SystemChrome, SystemUiOverlayStyle, rootBundle;
@@ -140,7 +142,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 PhosphorIconsRegular.magnifyingGlass,
                 size: 24.0,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const SearchBar1()),
+                );
+              },
             ),
             IconButton(
               icon: Badge(
@@ -360,7 +367,6 @@ class SocialPostCard extends StatelessWidget {
 
   // Dropdown tab list
   final List<String> options = [
-    "Add to Bookmarks",
     "Notify about posts",
     "Copy link",
     "Interesting",
@@ -370,9 +376,9 @@ class SocialPostCard extends StatelessWidget {
 
   // icon
   final RxBool isSelectHeart = false.obs;
+  final RxBool isSelectBookmark = false.obs;
   // icon Dropdown tab list
   final List<IconData> icons = [
-    PhosphorIconsRegular.bookmarkSimple,
     PhosphorIconsRegular.bellSimple,
     PhosphorIconsRegular.copySimple,
     PhosphorIconsRegular.plusCircle,
@@ -398,21 +404,9 @@ class SocialPostCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // User Info Section
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.zero, // delete padding
-                shape: const RoundedRectangleBorder(), // style shape button
-                tapTargetSize:
-                    MaterialTapTargetSize.shrinkWrap, // reduce hit area
-                elevation: 0, // shadow
-                backgroundColor:
-                    Colors.transparent, // If you don't want a button background
-                foregroundColor: Colors.grey,
-                surfaceTintColor: Colors.grey,
-                // overlayColor: Colors.white,
-                shadowColor: Colors.transparent,
-              ),
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {},
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2.0),
                 child: Row(
@@ -527,7 +521,7 @@ class SocialPostCard extends StatelessWidget {
                                               Icon(
                                                 icons[index],
                                                 color:
-                                                    index == 5
+                                                    index == 4
                                                         ? Colors.red
                                                         : Colors.grey[700],
                                               ),
@@ -535,7 +529,7 @@ class SocialPostCard extends StatelessWidget {
                                                 value,
                                                 style: TextStyle(
                                                   color:
-                                                      index == 5
+                                                      index == 4
                                                           ? Colors.red
                                                           : Colors.grey[700],
                                                 ),
@@ -628,12 +622,12 @@ class SocialPostCard extends StatelessWidget {
                           isSelectHeart.value
                               ? Icon(
                                 PhosphorIconsFill.heart,
-                                size: 18,
+                                size: 22,
                                 color: Colors.red,
                               )
                               : Icon(
                                 PhosphorIconsRegular.heart,
-                                size: 18,
+                                size: 22,
                                 color: Colors.grey[800],
                               ),
                           '$likes',
@@ -645,16 +639,23 @@ class SocialPostCard extends StatelessWidget {
                       _buildActionButton(
                         Icon(
                           PhosphorIconsRegular.chatCircleDots,
-                          size: 18,
+                          size: 22,
                           color: Colors.grey[800],
                         ),
                         '$comments',
-                        () {},
+                        () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CommentPage(),
+                            ),
+                          );
+                        },
                       ),
                       _buildActionButton(
                         Icon(
                           PhosphorIconsRegular.paperPlaneTilt,
-                          size: 18,
+                          size: 22,
                           color: Colors.grey[800],
                         ),
                         '$shares',
@@ -662,15 +663,24 @@ class SocialPostCard extends StatelessWidget {
                       ),
                     ],
                   ),
-
-                  _buildActionButton(
-                    Icon(
-                      PhosphorIconsRegular.shareFat,
-                      size: 18,
-                      color: Colors.grey[800],
+                  Obx(
+                    () => _buildActionButton(
+                      isSelectBookmark.value
+                          ? Icon(
+                            PhosphorIconsFill.bookmarkSimple,
+                            size: 22,
+                            color: Colors.yellow[700],
+                          )
+                          : Icon(
+                            PhosphorIconsRegular.bookmarkSimple,
+                            size: 22,
+                            color: Colors.grey[800],
+                          ),
+                      '',
+                      () {
+                        isSelectBookmark.toggle();
+                      },
                     ),
-                    'Reply',
-                    () {},
                   ),
                 ],
               ),
@@ -686,11 +696,17 @@ class SocialPostCard extends StatelessWidget {
     String text,
     VoidCallback onPressed,
   ) {
-    return TextButton.icon(
-      onPressed: onPressed,
-      icon: iconWidget,
-      label: Text(text, style: TextStyle(color: Colors.grey[800])),
-      style: TextButton.styleFrom(backgroundColor: Colors.grey[100]),
-    );
+    return text == ""
+        ? IconButton(
+          onPressed: onPressed,
+          icon: iconWidget,
+          style: TextButton.styleFrom(backgroundColor: Colors.grey[100]),
+        )
+        : TextButton.icon(
+          onPressed: onPressed,
+          icon: iconWidget,
+          label: Text(text, style: TextStyle(color: Colors.grey[800])),
+          style: TextButton.styleFrom(backgroundColor: Colors.grey[100]),
+        );
   }
 }
